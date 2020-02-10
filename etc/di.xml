@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="MagedIn\LoginAsCustomer\Api\SecretManagerInterface" type="MagedIn\LoginAsCustomer\Model\SecretManager"/>
+    <preference for="MagedIn\LoginAsCustomer\Api\HashGeneratorInterface" type="MagedIn\LoginAsCustomer\Model\HashGenerator"/>
+
+    <type name="MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder">
+        <arguments>
+            <argument name="url" xsi:type="object" shared="false">Magento\Framework\Url</argument>
+        </arguments>
+    </type>
+</config>

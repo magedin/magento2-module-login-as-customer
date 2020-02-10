@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace MagedIn\LoginAsCustomer\Model;
+
+use MagedIn\LoginAsCustomer\Api\HashGeneratorInterface;
+
+/**
+ * Class HashGenerator
+ *
+ * @package MagedIn\LoginAsCustomer\Model
+ */
+class HashGenerator implements HashGeneratorInterface
+{
+    /**
+     * @var \Magento\Framework\Math\Random
+     */
+    private $generator;
+
+    public function __construct(
+        \Magento\Framework\Math\Random $generator
+    ) {
+        $this->generator = $generator;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateHash($length, $chars = null) : string
+    {
+        return $this->generator->getRandomString($length, $chars);
+    }
+}

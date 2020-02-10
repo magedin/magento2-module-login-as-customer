@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magedin_loginascustomer>
+            <general>
+                <enable>1</enable>
+                <customer_grid_login_column>actions</customer_grid_login_column>
+                <disable_page_cache>0</disable_page_cache>
+            </general>
+        </magedin_loginascustomer>
+    </default>
+</config>
