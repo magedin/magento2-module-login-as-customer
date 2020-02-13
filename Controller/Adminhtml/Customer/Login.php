@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace MagedIn\LoginAsCustomer\Controller\Adminhtml\Customer;
 
-use MagedIn\LoginAsCustomer\Api\UrlParametersEncryptorInterface;
+use MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface;
 use MagedIn\LoginAsCustomer\Model\Validator\ParametersValidator;
 use Magento\Backend\App\Action;
 use Magento\Customer\Api\Data\CustomerInterface;
@@ -48,7 +48,7 @@ class Login extends Action
     private $frontendUrlBuilder;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Api\SecretManagerInterface
+     * @var \MagedIn\LoginAsCustomer\Model\SecretManagerInterface
      */
     private $secretManager;
 
@@ -65,8 +65,8 @@ class Login extends Action
         \Magento\Backend\Model\Auth\Session $session,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder $frontendUrlBuilder,
-        \MagedIn\LoginAsCustomer\Api\SecretManagerInterface $secretManager,
-        \MagedIn\LoginAsCustomer\Api\UrlParametersEncryptorInterface $urlParametersEncryptor
+        \MagedIn\LoginAsCustomer\Model\SecretManagerInterface $secretManager,
+        \MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface $urlParametersEncryptor
     ) {
         parent::__construct($context);
         $this->loginFactory = $loginFactory;
@@ -170,14 +170,15 @@ class Login extends Action
     private function getFrontendUrl(Data\LoginInterface $login) : string
     {
         $data = [
-            ParametersValidator::PARAM_STORE_ID    => $login->getStoreId(),
-            ParametersValidator::PARAM_CUSTOMER_ID => $login->getCustomerId(),
-            ParametersValidator::PARAM_SECRET      => $login->getSecret(),
+            ParametersValidator::PARAM_STORE_ID      => $login->getStoreId(),
+            ParametersValidator::PARAM_CUSTOMER_ID   => $login->getCustomerId(),
+            ParametersValidator::PARAM_SECRET        => $login->getSecret(),
+            ParametersValidator::PARAM_ADMIN_USER_ID => $login->getAdminUserId(),
         ];
 
         $params = [
             ParametersValidator::PARAM_HASH => $this->urlParametersEncryptor->encrypt($data),
-            '_nosid'         => true,
+            '_nosid'                        => true,
         ];
 
         /** @var \Magento\Store\Api\Data\StoreInterface $store */

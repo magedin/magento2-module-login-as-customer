@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace MagedIn\LoginAsCustomer\Api;
+namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class HashGeneratorInterface

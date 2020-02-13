@@ -3,6 +3,7 @@
     <module name="MagedIn_LoginAsCustomer">
         <sequence>
             <module name="Magento_Customer"/>
+            <module name="Magento_User"/>
         </sequence>
     </module>
 </config>

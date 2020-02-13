@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace MagedIn\LoginAsCustomer\Model;
 
 use MagedIn\LoginAsCustomer\Api\Data;
-use MagedIn\LoginAsCustomer\Api\LoginRepositoryInterface;
 
 /**
  * Class LoginRepository

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
-use MagedIn\LoginAsCustomer\Api\SecretManagerInterface;
+use MagedIn\LoginAsCustomer\Api\Data\LoginInterface;
 
 /**
  * Class SecretManager
@@ -19,12 +19,12 @@ class SecretManager implements SecretManagerInterface
     const HASH_LENGTH = 128;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Api\HashGeneratorInterface
+     * @var \MagedIn\LoginAsCustomer\Model\HashGeneratorInterface
      */
     private $hashGenerator;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Api\LoginRepositoryInterface
+     * @var \MagedIn\LoginAsCustomer\Model\LoginRepositoryInterface
      */
     private $loginRepository;
 
@@ -39,25 +39,39 @@ class SecretManager implements SecretManagerInterface
     private $loginResource;
 
     /**
-     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     * @var \MagedIn\LoginAsCustomer\Model\ExpirationTimeManagerInterface
      */
-    private $dateTime;
+    private $expirationTimeManager;
+
+    /**
+     * @var Validator\ExpirationTimeValidator
+     */
+    private $expirationTimeValidator;
 
     public function __construct(
-        \MagedIn\LoginAsCustomer\Api\HashGeneratorInterface $hashGenerator,
-        \MagedIn\LoginAsCustomer\Api\LoginRepositoryInterface $loginRepository,
+        HashGeneratorInterface $hashGenerator,
+        LoginRepositoryInterface $loginRepository,
         \MagedIn\LoginAsCustomer\Model\LoginFactory $loginFactory,
-        \MagedIn\LoginAsCustomer\Model\ResourceModel\Login $loginResource,
-        \Magento\Framework\Stdlib\DateTime\DateTime $dateTime
+        ResourceModel\Login $loginResource,
+        ExpirationTimeManagerInterface $expirationTimeManager,
+        Validator\ExpirationTimeValidator $expirationTimeValidator
     ) {
         $this->hashGenerator = $hashGenerator;
         $this->loginRepository = $loginRepository;
         $this->loginFactory = $loginFactory;
         $this->loginResource = $loginResource;
-        $this->dateTime = $dateTime;
+        $this->expirationTimeManager = $expirationTimeManager;
+        $this->expirationTimeValidator = $expirationTimeValidator;
     }
 
-    public function create(int $customerId, int $storeId, int $userId = null)
+    /**
+     * @param int      $customerId
+     * @param int      $storeId
+     * @param int|null $userId
+     *
+     * @return LoginInterface
+     */
+    public function create(int $customerId, int $storeId, int $userId = null) : LoginInterface
     {
         $this->loginResource->deleteByCustomerId($customerId);
 
@@ -66,7 +80,7 @@ class SecretManager implements SecretManagerInterface
         $login->setStoreId($storeId);
         $login->setAdminUserId($userId);
         $login->setSecret($this->generate());
-        $login->setExpiresAt($this->getExpirationTime(1));
+        $login->setExpiresAt($this->expirationTimeManager->get());
 
         $this->loginRepository->save($login);
 
@@ -84,8 +98,9 @@ class SecretManager implements SecretManagerInterface
     /**
      * @inheritDoc
      */
-    public function match(int $customerId, int $storeId, string $secret) : bool
+    public function match(int $customerId, int $storeId, string $secret, int $adminUserId) : bool
     {
+        /** @var LoginInterface $login */
         $login = $this->loginFactory->create();
         $this->loginResource->loadBySecret($login, $secret);
 
@@ -101,7 +116,11 @@ class SecretManager implements SecretManagerInterface
             return false;
         }
 
-        if (!$this->validateExpirationTime($login->getExpiresAt())) {
+        if ($login->getAdminUserId() !== $adminUserId) {
+            return false;
+        }
+
+        if (!$this->expirationTimeValidator->validate($login->getExpiresAt())) {
             return false;
         }
 
@@ -109,30 +128,18 @@ class SecretManager implements SecretManagerInterface
     }
 
     /**
-     * @param string $expirationTime
-     *
-     * @return bool
+     * @inheritDoc
      */
-    private function validateExpirationTime(string $expirationTime) : bool
+    public function deleteByCustomerId(int $customerId) : bool
     {
-        $expiresAt = strtotime($expirationTime);
-        $now = strtotime('now');
-        $difference = $expiresAt - $now;
-
-        if ($difference < 0) {
-            return false;
-        }
-
-        return true;
+        return (bool) $this->loginResource->deleteByCustomerId($customerId);
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    private function getExpirationTime(int $addMinutes = null) : string
+    public function delete(string $secret) : bool
     {
-        $input  = strtotime("+{$addMinutes} minutes");
-        $datetime = $this->dateTime->date('Y-m-d H:i:s', $input);
-        return $datetime;
+        return (bool) $this->loginResource->deleteBySecret($secret);
     }
 }

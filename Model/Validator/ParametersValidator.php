@@ -33,6 +33,11 @@ class ParametersValidator
     /**
      * @var string
      */
+    const PARAM_ADMIN_USER_ID = 'admin_user_id';
+
+    /**
+     * @var string
+     */
     const PARAM_HASH = 'hash';
 
     /**
@@ -50,14 +55,21 @@ class ParametersValidator
      */
     private $customerResource;
 
+    /**
+     * @var \Magento\User\Model\ResourceModel\User\CollectionFactory
+     */
+    private $userCollectionFactory;
+
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Customer\Model\ResourceModel\Customer $customerResource,
+        \Magento\User\Model\ResourceModel\User\CollectionFactory $userCollectionFactory,
         SecretManager $secretManager
     ) {
         $this->storeManager = $storeManager;
         $this->secretManager = $secretManager;
         $this->customerResource = $customerResource;
+        $this->userCollectionFactory = $userCollectionFactory;
     }
 
     /**
@@ -84,11 +96,16 @@ class ParametersValidator
             throw new LocalizedException(__('Secret parameter is not valid.'));
         }
 
-        $customerId = (int)    $params[self::PARAM_CUSTOMER_ID];
-        $storeId    = (int)    $params[self::PARAM_STORE_ID];
-        $secret     = (string) $params[self::PARAM_SECRET];
+        if (!$this->validateAdminUserIdParam($params)) {
+            throw new LocalizedException(__('Admin user parameter is not valid.'));
+        }
 
-        if (!$this->validateSecret($customerId, $storeId, $secret)) {
+        $customerId  = (int)    $params[self::PARAM_CUSTOMER_ID];
+        $storeId     = (int)    $params[self::PARAM_STORE_ID];
+        $adminUserId = (int)    $params[self::PARAM_ADMIN_USER_ID];
+        $secret      = (string) $params[self::PARAM_SECRET];
+
+        if (!$this->validateSecret($customerId, $storeId, $secret, $adminUserId)) {
             throw new NoSuchEntityException(__('Secret was not found or is expired.'));
         }
 
@@ -173,15 +190,42 @@ class ParametersValidator
     }
 
     /**
-     * @param int    $customerId
-     * @param int    $storeId
-     * @param string $secret
+     * @param array $params
      *
      * @return bool
      */
-    private function validateSecret(int $customerId, int $storeId, string $secret) : bool
+    private function validateAdminUserIdParam(array $params) : bool
     {
-        if (!$this->secretManager->match($customerId, $storeId, $secret)) {
+        if (!isset($params[self::PARAM_ADMIN_USER_ID])) {
+            return false;
+        }
+
+        $adminUserId = (int) $params[self::PARAM_ADMIN_USER_ID];
+
+        /** @var \Magento\User\Model\ResourceModel\User\Collection $collection */
+        $collection = $this->userCollectionFactory->create();
+        $collection->addFieldToFilter('main_table.user_id', $adminUserId)
+            ->getSelect()
+            ->limit(1);
+
+        if (!$collection->getSize()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int    $customerId
+     * @param int    $storeId
+     * @param string $secret
+     * @param int    $adminUserId
+     *
+     * @return bool
+     */
+    private function validateSecret(int $customerId, int $storeId, string $secret, int $adminUserId) : bool
+    {
+        if (!$this->secretManager->match($customerId, $storeId, $secret, $adminUserId)) {
             return false;
         }
 

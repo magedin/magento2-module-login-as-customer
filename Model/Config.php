@@ -20,6 +20,11 @@ class Config
     const XML_PATH_ENABLED = 'magedin_loginascustomer/general/enable';
 
     /**
+     * @var string
+     */
+    const XML_PATH_SECRET_KEY_EXPIRATION_TIME = 'magedin_loginascustomer/security/secret_key_expiration_time';
+
+    /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     private $scopeConfig;
@@ -44,6 +49,17 @@ class Config
     {
         return (bool) $this->scopeConfig->getValue(
             self::XML_PATH_ENABLED,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * @return int
+     */
+    public function getSecretKeyExpirationTime() : int
+    {
+        return (int) $this->scopeConfig->getValue(
+            self::XML_PATH_SECRET_KEY_EXPIRATION_TIME,
             ScopeInterface::SCOPE_STORE
         );
     }

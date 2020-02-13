@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="MagedIn\LoginAsCustomer\Api\SecretManagerInterface" type="MagedIn\LoginAsCustomer\Model\SecretManager"/>
-    <preference for="MagedIn\LoginAsCustomer\Api\HashGeneratorInterface" type="MagedIn\LoginAsCustomer\Model\HashGenerator"/>
-    <preference for="MagedIn\LoginAsCustomer\Api\LoginRepositoryInterface" type="MagedIn\LoginAsCustomer\Model\LoginRepository"/>
-    <preference for="MagedIn\LoginAsCustomer\Api\UrlParametersEncryptorInterface" type="MagedIn\LoginAsCustomer\Model\UrlParametersEncryptor"/>
+    <preference for="MagedIn\LoginAsCustomer\Model\SecretManagerInterface" type="MagedIn\LoginAsCustomer\Model\SecretManager"/>
+    <preference for="MagedIn\LoginAsCustomer\Model\HashGeneratorInterface" type="MagedIn\LoginAsCustomer\Model\HashGenerator"/>
+    <preference for="MagedIn\LoginAsCustomer\Model\LoginRepositoryInterface" type="MagedIn\LoginAsCustomer\Model\LoginRepository"/>
+    <preference for="MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface" type="MagedIn\LoginAsCustomer\Model\UrlParametersEncryptor"/>
+    <preference for="MagedIn\LoginAsCustomer\Model\ExpirationTimeManagerInterface" type="\MagedIn\LoginAsCustomer\Model\ExpirationTimeManager"/>
 
     <type name="MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder">
         <arguments>

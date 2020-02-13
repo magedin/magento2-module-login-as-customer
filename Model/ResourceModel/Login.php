@@ -58,9 +58,27 @@ class Login extends AbstractDb
      */
     public function deleteByCustomerId(int $customerId) : bool
     {
-        $condition = new \Zend\Db\Sql\Expression("customer_id = {$customerId}");
-        $result = $this->getConnection()->delete(self::TABLE, $condition->getExpression());
+        return $this->deleteByExpression(new \Zend\Db\Sql\Expression("customer_id = {$customerId}"));
+    }
 
+    /**
+     * @param string $secret
+     *
+     * @return bool
+     */
+    public function deleteBySecret(string $secret) : bool
+    {
+        return $this->deleteByExpression(new \Zend\Db\Sql\Expression("secret = {$secret}"));
+    }
+
+    /**
+     * @param \Zend\Db\Sql\Expression $expression
+     *
+     * @return bool
+     */
+    private function deleteByExpression(\Zend\Db\Sql\Expression $expression)
+    {
+        $result = $this->getConnection()->delete(self::TABLE, $expression->getExpression());
         return (bool) $result;
     }
 }
