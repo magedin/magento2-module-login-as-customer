@@ -7,6 +7,9 @@
                 <customer_grid_login_column>actions</customer_grid_login_column>
                 <disable_page_cache>0</disable_page_cache>
             </general>
+            <security>
+                <secret_key_expiration_time>60</secret_key_expiration_time>
+            </security>
         </magedin_loginascustomer>
     </default>
 </config>

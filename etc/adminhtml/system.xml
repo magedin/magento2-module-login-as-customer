@@ -5,23 +5,38 @@
         <tab id="magedin" translate="label" sortOrder="900">
             <label><![CDATA[MagedIn]]></label>
         </tab>
-        <section id="MagedIn_LoginAsCustomer" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="magedin_loginascustomer" translate="label" type="text" sortOrder="100" showInDefault="1"
+                 showInWebsite="1" showInStore="1">
             <tab>magedin</tab>
             <label><![CDATA[Login As Customer]]></label>
             <resource>MagedIn_LoginAsCustomer::config_section</resource>
-            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="10" showInWebsite="1" showInStore="1">
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="10" showInWebsite="1"
+                   showInStore="1">
                 <label><![CDATA[General Settings]]></label>
-                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label><![CDATA[Enabled]]></label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="customer_grid_login_column" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="customer_grid_login_column" translate="label comment" type="select" sortOrder="100"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Customer Grid Login Button Column</label>
                     <source_model>MagedIn\LoginAsCustomer\Model\Config\Source\CustomerGridColumnPosition</source_model>
                 </field>
-                <field id="disable_page_cache" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="disable_page_cache" translate="label comment" type="select" sortOrder="110"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Disable Page Cache For Admin User</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="security" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Security configuration</label>
+                <comment>All the configurations about the security of this module is under this tab.</comment>
+                <field id="secret_key_expiration_time" translate="label comment" type="text" sortOrder="120"
+                       showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Expiration Time</label>
+                    <comment>This is the amount time, IN SECONDS, that the generated secret key will be valid.</comment>
                 </field>
             </group>
         </section>

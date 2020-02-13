@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace MagedIn\LoginAsCustomer\Controller\Adminhtml\Customer;
 
 use MagedIn\LoginAsCustomer\Api\UrlParametersEncryptorInterface;
+use MagedIn\LoginAsCustomer\Model\Validator\ParametersValidator;
 use Magento\Backend\App\Action;
 use Magento\Customer\Api\Data\CustomerInterface;
 use MagedIn\LoginAsCustomer\Api\Data;
@@ -16,26 +17,6 @@ use MagedIn\LoginAsCustomer\Api\Data;
  */
 class Login extends Action
 {
-    /**
-     * @var string
-     */
-    const PARAM_CUSTOMER_ID = 'customer_id';
-
-    /**
-     * @var string
-     */
-    const PARAM_STORE_ID = 'store_id';
-
-    /**
-     * @var string
-     */
-    const PARAM_SECRET = 'secret';
-
-    /**
-     * @var string
-     */
-    const PARAM_HASH = 'hash';
-
     /**
      * @var \MagedIn\LoginAsCustomer\Model\LoginFactory
      */
@@ -157,7 +138,7 @@ class Login extends Action
      */
     private function getCustomerId() : int
     {
-        $customerId = (int) $this->getRequest()->getParam(self::PARAM_CUSTOMER_ID);
+        $customerId = (int) $this->getRequest()->getParam(ParametersValidator::PARAM_CUSTOMER_ID);
 
         return $customerId;
     }
@@ -189,13 +170,13 @@ class Login extends Action
     private function getFrontendUrl(Data\LoginInterface $login) : string
     {
         $data = [
-            self::PARAM_STORE_ID    => $login->getStoreId(),
-            self::PARAM_CUSTOMER_ID => $login->getCustomerId(),
-            self::PARAM_SECRET      => $login->getSecret(),
+            ParametersValidator::PARAM_STORE_ID    => $login->getStoreId(),
+            ParametersValidator::PARAM_CUSTOMER_ID => $login->getCustomerId(),
+            ParametersValidator::PARAM_SECRET      => $login->getSecret(),
         ];
 
         $params = [
-            self::PARAM_HASH => $this->urlParametersEncryptor->encrypt($data),
+            ParametersValidator::PARAM_HASH => $this->urlParametersEncryptor->encrypt($data),
             '_nosid'         => true,
         ];
 

@@ -17,7 +17,7 @@ class Login extends AbstractDb
     /**
      * @var string
      */
-    const TABLE = 'magedin_login_as_customer';
+    const TABLE = 'magedin_login_as_customer_secret';
 
     /**
      * @inheritDoc
