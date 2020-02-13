@@ -4,8 +4,6 @@ namespace MagedIn\LoginAsCustomer\Block\Adminhtml\Customer\Edit;
 
 use Magento\Customer\Block\Adminhtml\Edit\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
-use Magento\Framework\Registry;
-use Magento\Backend\Block\Widget\Context;
 
 /**
  * Class LoginButton
@@ -27,14 +25,13 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
     /**
      * LoginButton constructor.
      *
-     * @param Context                                   $context
-     * @param Registry                                  $registry
-     * @param \MagedIn\LoginAsCustomer\Model\Config     $config
-     * @param \Magento\Framework\AuthorizationInterface $authorization
+     * @param \Magento\Backend\Block\Widget\Context $context
+     * @param \Magento\Framework\Registry           $registry
+     * @param \MagedIn\LoginAsCustomer\Model\Config $config
      */
     public function __construct(
-        Context $context,
-        Registry $registry,
+        \Magento\Backend\Block\Widget\Context $context,
+        \Magento\Framework\Registry $registry,
         \MagedIn\LoginAsCustomer\Model\Config $config
     ) {
         parent::__construct($context, $registry);
@@ -47,11 +44,8 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
      */
     public function getButtonData() : array
     {
-        $data      = [];
-        $canModify = $this->getCustomerId() && $this->authorization->isAllowed('MagedIn_LoginAsCustomer::login_button');
-
-        if (!$canModify || !$this->config->isEnabled()) {
-            return $data;
+        if (!$this->isButtonAvailable()) {
+            return [];
         }
 
         return $this->getButtonInfo();
@@ -64,6 +58,7 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
     {
         return [
             'label'      => __('Login As Customer'),
+            'title'      => __('Login as this customer in the frontend and access customer panel.'),
             'class'      => 'add login login-button',
             'on_click'   => "window.open('{$this->getLoginAsCustomerUrl()}')",
             'sort_order' => 70,
@@ -75,6 +70,29 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
      */
     private function getLoginAsCustomerUrl() : string
     {
-        return $this->getUrl('magedin_loginascustomer/customer/login', ['customer_id' => $this->getCustomerId()]);
+        $params = ['customer_id' => $this->getCustomerId()];
+        return $this->getUrl('magedin_loginascustomer/customer/login', $params);
+    }
+
+    /**
+     * Check if button can be available.
+     *
+     * @return bool
+     */
+    private function isButtonAvailable()
+    {
+        if (!$this->config->isEnabled()) {
+            return false;
+        }
+
+        if (!$this->getCustomerId()) {
+            return false;
+        }
+
+        if (!$this->authorization->isAllowed('MagedIn_LoginAsCustomer::login_button')) {
+            return false;
+        }
+
+        return true;
     }
 }
