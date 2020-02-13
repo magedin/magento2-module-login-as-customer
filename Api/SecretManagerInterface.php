@@ -18,9 +18,10 @@ interface SecretManagerInterface
 
     /**
      * @param int    $customerId
+     * @param int    $storeId
      * @param string $secret
      *
      * @return bool
      */
-    public function match(int $customerId, string $secret) : bool;
+    public function match(int $customerId, int $storeId, string $secret) : bool;
 }

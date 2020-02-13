@@ -102,7 +102,7 @@ class Login extends AbstractModel implements LoginInterface
      */
     public function getExpiresAt() : string
     {
-        return (string) $this->getData(self::STORE_ID);
+        return (string) $this->getData(self::EXPIRES_AT);
     }
 
     /**

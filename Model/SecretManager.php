@@ -38,16 +38,23 @@ class SecretManager implements SecretManagerInterface
      */
     private $loginResource;
 
+    /**
+     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     */
+    private $dateTime;
+
     public function __construct(
         \MagedIn\LoginAsCustomer\Api\HashGeneratorInterface $hashGenerator,
         \MagedIn\LoginAsCustomer\Api\LoginRepositoryInterface $loginRepository,
         \MagedIn\LoginAsCustomer\Model\LoginFactory $loginFactory,
-        \MagedIn\LoginAsCustomer\Model\ResourceModel\Login $loginResource
+        \MagedIn\LoginAsCustomer\Model\ResourceModel\Login $loginResource,
+        \Magento\Framework\Stdlib\DateTime\DateTime $dateTime
     ) {
         $this->hashGenerator = $hashGenerator;
         $this->loginRepository = $loginRepository;
         $this->loginFactory = $loginFactory;
         $this->loginResource = $loginResource;
+        $this->dateTime = $dateTime;
     }
 
     public function create(int $customerId, int $storeId, int $userId = null)
@@ -59,7 +66,7 @@ class SecretManager implements SecretManagerInterface
         $login->setStoreId($storeId);
         $login->setAdminUserId($userId);
         $login->setSecret($this->generate());
-        $login->setExpiresAt(date('Y-m-d H:i:s'));
+        $login->setExpiresAt($this->getExpirationTime(1));
 
         $this->loginRepository->save($login);
 
@@ -77,8 +84,55 @@ class SecretManager implements SecretManagerInterface
     /**
      * @inheritDoc
      */
-    public function match(int $customerId, string $secret) : bool
+    public function match(int $customerId, int $storeId, string $secret) : bool
     {
-        // TODO: Implement match() method.
+        $login = $this->loginFactory->create();
+        $this->loginResource->loadBySecret($login, $secret);
+
+        if (!$login->getId()) {
+            return false;
+        }
+
+        if ($login->getCustomerId() !== $customerId) {
+            return false;
+        }
+
+        if ($login->getStoreId() !== $storeId) {
+            return false;
+        }
+
+        if (!$this->validateExpirationTime($login->getExpiresAt())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $expirationTime
+     *
+     * @return bool
+     */
+    private function validateExpirationTime(string $expirationTime) : bool
+    {
+        $expiresAt = strtotime($expirationTime);
+        $now = strtotime('now');
+        $difference = $expiresAt - $now;
+
+        if ($difference < 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return string
+     */
+    private function getExpirationTime(int $addMinutes = null) : string
+    {
+        $input  = strtotime("+{$addMinutes} minutes");
+        $datetime = $this->dateTime->date('Y-m-d H:i:s', $input);
+        return $datetime;
     }
 }
