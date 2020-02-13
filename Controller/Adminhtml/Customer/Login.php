@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace MagedIn\LoginAsCustomer\Controller\Adminhtml\Customer;
 
+use MagedIn\LoginAsCustomer\Api\UrlParametersEncryptorInterface;
 use Magento\Backend\App\Action;
 use Magento\Customer\Api\Data\CustomerInterface;
+use MagedIn\LoginAsCustomer\Api\Data;
 
 /**
  * Class Login
@@ -22,7 +24,17 @@ class Login extends Action
     /**
      * @var string
      */
+    const PARAM_STORE_ID = 'store_id';
+
+    /**
+     * @var string
+     */
     const PARAM_SECRET = 'secret';
+
+    /**
+     * @var string
+     */
+    const PARAM_HASH = 'hash';
 
     /**
      * @var \MagedIn\LoginAsCustomer\Model\LoginFactory
@@ -59,6 +71,11 @@ class Login extends Action
      */
     private $secretManager;
 
+    /**
+     * @var UrlParametersEncryptorInterface
+     */
+    private $urlParametersEncryptor;
+
     public function __construct(
         Action\Context $context,
         \MagedIn\LoginAsCustomer\Model\LoginFactory $loginFactory,
@@ -67,7 +84,8 @@ class Login extends Action
         \Magento\Backend\Model\Auth\Session $session,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder $frontendUrlBuilder,
-        \MagedIn\LoginAsCustomer\Api\SecretManagerInterface $secretManager
+        \MagedIn\LoginAsCustomer\Api\SecretManagerInterface $secretManager,
+        \MagedIn\LoginAsCustomer\Api\UrlParametersEncryptorInterface $urlParametersEncryptor
     ) {
         parent::__construct($context);
         $this->loginFactory = $loginFactory;
@@ -77,6 +95,7 @@ class Login extends Action
         $this->storeManager = $storeManager;
         $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->secretManager = $secretManager;
+        $this->urlParametersEncryptor = $urlParametersEncryptor;
     }
 
     /**
@@ -101,17 +120,14 @@ class Login extends Action
             return $this->_redirect('customer/index/index');
         }
 
-        $user = $this->session->getUser();
+        /** @var Data\LoginInterface $login */
+        $login = $this->secretManager->create(
+            (int) $customer->getId(),
+            (int) $customer->getStoreId(),
+            (int) $this->session->getUser()->getId()
+        );
 
-        /** @var \MagedIn\LoginAsCustomer\Model\Login $login */
-        $login = $this->loginFactory->create();
-        $login->setCustomerId($customer->getId());
-
-        /** @var \Magento\Store\Api\Data\StoreInterface $store */
-        $store = $this->storeManager->getStore($customer->getStoreId());
-        $this->frontendUrlBuilder->setStore($store);
-
-        $redirectUrl = $this->getFrontendUrl($customerId);
+        $redirectUrl = $this->getFrontendUrl($login);
 
         $result = $this->resultRedirectFactory->create();
         $result->setUrl($redirectUrl);
@@ -170,13 +186,22 @@ class Login extends Action
     /**
      * @return string
      */
-    private function getFrontendUrl(int $customerId) : string
+    private function getFrontendUrl(Data\LoginInterface $login) : string
     {
-        $params = [
-            self::PARAM_CUSTOMER_ID => $customerId,
-            self::PARAM_SECRET      => $this->secretManager->generate(),
-            '_nosid'                => true
+        $data = [
+            self::PARAM_STORE_ID    => $login->getStoreId(),
+            self::PARAM_CUSTOMER_ID => $login->getCustomerId(),
+            self::PARAM_SECRET      => $login->getSecret(),
         ];
+
+        $params = [
+            self::PARAM_HASH => $this->urlParametersEncryptor->encrypt($data),
+            '_nosid'         => true,
+        ];
+
+        /** @var \Magento\Store\Api\Data\StoreInterface $store */
+        $store = $this->storeManager->getStore($login->getStoreId());
+        $this->frontendUrlBuilder->setStore($store);
 
         return $this->frontendUrlBuilder->buildUrl('magedin_loginascustomer/customer/auth', $params);
     }
