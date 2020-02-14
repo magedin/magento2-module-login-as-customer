@@ -4,7 +4,13 @@
     <preference for="MagedIn\LoginAsCustomer\Model\HashGeneratorInterface" type="MagedIn\LoginAsCustomer\Model\HashGenerator"/>
     <preference for="MagedIn\LoginAsCustomer\Model\LoginRepositoryInterface" type="MagedIn\LoginAsCustomer\Model\LoginRepository"/>
     <preference for="MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface" type="MagedIn\LoginAsCustomer\Model\UrlParametersEncryptor"/>
-    <preference for="MagedIn\LoginAsCustomer\Model\ExpirationTimeManagerInterface" type="\MagedIn\LoginAsCustomer\Model\ExpirationTimeManager"/>
+    <preference for="MagedIn\LoginAsCustomer\Model\ExpirationTimeManagerInterface" type="MagedIn\LoginAsCustomer\Model\ExpirationTimeManager"/>
+    <preference for="MagedIn\LoginAsCustomer\Model\LoginProcessorInterface" type="MagedIn\LoginAsCustomer\Model\LoginProcessor"/>
+
+    <type name="Magento\Customer\Ui\Component\Listing\Column\Actions">
+        <plugin name="AddLoginAsCustomerToCustomerListing"
+                type="MagedIn\LoginAsCustomer\Plugin\AddLoginActionToCustomerListing"/>
+    </type>
 
     <type name="MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder">
         <arguments>

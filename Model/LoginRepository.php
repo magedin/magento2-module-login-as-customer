@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace MagedIn\LoginAsCustomer\Model;
 
 use MagedIn\LoginAsCustomer\Api\Data;
+use Magento\Framework\Exception\AlreadyExistsException;
 
 /**
  * Class LoginRepository
@@ -61,11 +62,20 @@ class LoginRepository implements LoginRepositoryInterface
      */
     public function deleteBySecret(string $secret) : bool
     {
-        // TODO: Implement deleteBySecret() method.
+        return (bool) $this->resource->deleteBySecret($secret);
     }
 
     /**
      * @inheritDoc
+     */
+    public function deleteByCustomerId(int $customerId) : bool
+    {
+        return (bool) $this->resource->deleteByCustomerId($customerId);
+    }
+
+    /**
+     * @inheritDoc
+     * @throws AlreadyExistsException
      */
     public function save(Data\LoginInterface $login) : Data\LoginInterface
     {

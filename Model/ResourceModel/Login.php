@@ -33,7 +33,7 @@ class Login extends AbstractDb
      *
      * @return Data\LoginInterface
      */
-    public function loadByCustomerId(Data\LoginInterface $login, int $customerId)
+    public function loadByCustomerId(Data\LoginInterface $login, int $customerId) : Data\LoginInterface
     {
         $this->load($login, $customerId, Data\LoginInterface::CUSTOMER_ID);
         return $login;
@@ -45,7 +45,7 @@ class Login extends AbstractDb
      *
      * @return Data\LoginInterface
      */
-    public function loadBySecret(Data\LoginInterface $login, string $secret)
+    public function loadBySecret(Data\LoginInterface $login, string $secret) : Data\LoginInterface
     {
         $this->load($login, $secret, Data\LoginInterface::SECRET);
         return $login;
@@ -56,7 +56,7 @@ class Login extends AbstractDb
      *
      * @return bool
      */
-    public function deleteByCustomerId(int $customerId) : bool
+    public function deleteByCustomerId(int $customerId) : int
     {
         return $this->deleteByExpression(new \Zend\Db\Sql\Expression("customer_id = {$customerId}"));
     }
@@ -66,7 +66,7 @@ class Login extends AbstractDb
      *
      * @return bool
      */
-    public function deleteBySecret(string $secret) : bool
+    public function deleteBySecret(string $secret) : int
     {
         return $this->deleteByExpression(new \Zend\Db\Sql\Expression("secret = {$secret}"));
     }
@@ -74,11 +74,11 @@ class Login extends AbstractDb
     /**
      * @param \Zend\Db\Sql\Expression $expression
      *
-     * @return bool
+     * @return int
      */
-    private function deleteByExpression(\Zend\Db\Sql\Expression $expression)
+    private function deleteByExpression(\Zend\Db\Sql\Expression $expression) : int
     {
         $result = $this->getConnection()->delete(self::TABLE, $expression->getExpression());
-        return (bool) $result;
+        return (int) $result;
     }
 }

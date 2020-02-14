@@ -18,11 +18,6 @@
                     <label><![CDATA[Enabled]]></label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="customer_grid_login_column" translate="label comment" type="select" sortOrder="100"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Customer Grid Login Button Column</label>
-                    <source_model>MagedIn\LoginAsCustomer\Model\Config\Source\CustomerGridColumnPosition</source_model>
-                </field>
                 <field id="disable_page_cache" translate="label comment" type="select" sortOrder="110"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Disable Page Cache For Admin User</label>
@@ -36,7 +31,8 @@
                 <field id="secret_key_expiration_time" translate="label comment" type="text" sortOrder="120"
                        showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Expiration Time</label>
-                    <comment>This is the amount time, IN SECONDS, that the generated secret key will be valid.</comment>
+                    <comment>This is the amount time, IN SECONDS, that the generated secret key will be valid.
+                    For security reasons it can't be between 30 and 3600 (1 hour) seconds.</comment>
                 </field>
             </group>
         </section>

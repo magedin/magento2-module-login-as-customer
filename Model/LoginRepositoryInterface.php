@@ -40,4 +40,11 @@ interface LoginRepositoryInterface
      * @return bool
      */
     public function deleteBySecret(string $secret) : bool;
+
+    /**
+     * @param int $customerId
+     *
+     * @return bool
+     */
+    public function deleteByCustomerId(int $customerId) : bool;
 }

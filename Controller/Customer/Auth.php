@@ -4,9 +4,8 @@ declare(strict_types = 1);
 
 namespace MagedIn\LoginAsCustomer\Controller\Customer;
 
-use MagedIn\LoginAsCustomer\Model\SecretManagerInterface;
+use MagedIn\LoginAsCustomer\Model\LoginProcessorInterface;
 use MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface;
-use MagedIn\LoginAsCustomer\Model\CustomerAuthenticator;
 use MagedIn\LoginAsCustomer\Model\Validator\ParametersValidator;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -25,39 +24,25 @@ class Auth extends Action
     private $urlParametersEncryptor;
 
     /**
-     * @var SecretManagerInterface
-     */
-    private $secretManager;
-
-    /**
-     * @var CustomerAuthenticator
-     */
-    private $customerAuthenticator;
-
-    /**
      * @var ParametersValidator
      */
     private $parametersValidator;
 
     /**
-     * @var \Magento\Framework\Event\ManagerInterface
+     * @var LoginProcessorInterface
      */
-    private $eventManager;
+    private $loginProcessor;
 
     public function __construct(
         Context $context,
         UrlParametersEncryptorInterface $urlParametersEncryptor,
-        SecretManagerInterface $secretManager,
-        CustomerAuthenticator $customerAuthenticator,
         ParametersValidator $parametersValidator,
-        \Magento\Framework\Event\ManagerInterface $eventManager
+        LoginProcessorInterface $loginProcessor
     ) {
         parent::__construct($context);
         $this->urlParametersEncryptor = $urlParametersEncryptor;
-        $this->secretManager = $secretManager;
-        $this->customerAuthenticator = $customerAuthenticator;
         $this->parametersValidator = $parametersValidator;
-        $this->eventManager = $eventManager;
+        $this->loginProcessor = $loginProcessor;
     }
 
     /**
@@ -77,7 +62,17 @@ class Auth extends Action
 
         $customerId  = (int) $params[ParametersValidator::PARAM_CUSTOMER_ID];
         $adminUserId = (int) $params[ParametersValidator::PARAM_ADMIN_USER_ID];
-        return $this->processLogin($customerId, $adminUserId);
+
+        /** @var \Magento\Customer\Model\Customer $customer */
+        $customer = $this->loginProcessor->process($customerId, $adminUserId);
+
+        if (!$customer->getId()) {
+            $this->messageManager->addErrorMessage(__('Could not login customer.'));
+            return $this->redirectToLogin();
+        }
+
+        $this->messageManager->addSuccessMessage(__('You are now logged in as %1.', $customer->getName()));
+        return $this->redirectToCustomerAccount();
     }
 
     /**
@@ -89,33 +84,6 @@ class Auth extends Action
     {
         $params = $this->urlParametersEncryptor->decrypt($hash);
         return (array) $params;
-    }
-
-    /**
-     * @param int $customerId
-     * @param int $adminUserId
-     *
-     * @return ResponseInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    private function processLogin(int $customerId, int $adminUserId) : ResponseInterface
-    {
-        /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = $this->customerAuthenticator->authenticate($customerId);
-
-        if (!$customer->getId()) {
-            $this->eventManager->dispatch('magedin_login_as_customer_fail', [
-                'customer_id'   => $customerId,
-                'admin_user_id' => $adminUserId
-            ]);
-            $this->messageManager->addErrorMessage(__('Could not login customer.'));
-            return $this->redirectToLogin();
-        }
-
-        $this->eventManager->dispatch('magedin_login_as_customer_success', ['customer' => $customer]);
-
-        $this->messageManager->addSuccessMessage(__('You are now logged in as %1.', $customer->getName()));
-        return $this->redirectToCustomerAccount();
     }
 
     /**

@@ -12,16 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 class ExpirationTimeManager implements ExpirationTimeManagerInterface
 {
     /**
-     * @var int
-     */
-    const DEFAULT_EXPIRATION_TIME = 60;
-
-    /**
-     * @var int
-     */
-    const MIN_EXPIRATION_TIME = 30;
-
-    /**
      * @var Config
      */
     private $config;
@@ -54,7 +44,11 @@ class ExpirationTimeManager implements ExpirationTimeManagerInterface
      */
     private function getExpirationTimeSeconds() : int
     {
+        /**
+         * Time can't be less than MIN_EXPIRATION_TIME and nor max than MAX_EXPIRATION_TIME.
+         */
         $seconds = (int) max($this->config->getSecretKeyExpirationTime(), self::MIN_EXPIRATION_TIME);
+        $seconds = (int) min($seconds, self::MAX_EXPIRATION_TIME);
 
         if (!$seconds) {
             return self::DEFAULT_EXPIRATION_TIME;

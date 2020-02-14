@@ -23,6 +23,11 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
     private $config;
 
     /**
+     * @var \MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder
+     */
+    private $loginUrlBuilder;
+
+    /**
      * LoginButton constructor.
      *
      * @param \Magento\Backend\Block\Widget\Context $context
@@ -32,11 +37,13 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
-        \MagedIn\LoginAsCustomer\Model\Config $config
+        \MagedIn\LoginAsCustomer\Model\Config $config,
+        \MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder $loginUrlBuilder
     ) {
         parent::__construct($context, $registry);
         $this->config = $config;
         $this->authorization = $context->getAuthorization();
+        $this->loginUrlBuilder = $loginUrlBuilder;
     }
 
     /**
@@ -56,22 +63,17 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
      */
     private function getButtonInfo() : array
     {
+        if (!$this->getCustomerId()) {
+            return [];
+        }
+
         return [
             'label'      => __('Login As Customer'),
             'title'      => __('Login as this customer in the frontend and access customer panel.'),
             'class'      => 'add login login-button',
-            'on_click'   => "window.open('{$this->getLoginAsCustomerUrl()}')",
+            'on_click'   => "window.open('{$this->loginUrlBuilder->getUrl((int) $this->getCustomerId())}')",
             'sort_order' => 70,
         ];
-    }
-
-    /**
-     * @return string
-     */
-    private function getLoginAsCustomerUrl() : string
-    {
-        $params = ['customer_id' => $this->getCustomerId()];
-        return $this->getUrl('magedin_loginascustomer/customer/login', $params);
     }
 
     /**
