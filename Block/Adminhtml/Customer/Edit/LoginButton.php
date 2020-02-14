@@ -28,6 +28,11 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
     private $loginUrlBuilder;
 
     /**
+     * @var \MagedIn\LoginAsCustomer\Model\Permission
+     */
+    private $permission;
+
+    /**
      * LoginButton constructor.
      *
      * @param \Magento\Backend\Block\Widget\Context $context
@@ -38,12 +43,14 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
         \MagedIn\LoginAsCustomer\Model\Config $config,
+        \MagedIn\LoginAsCustomer\Model\Permission $permission,
         \MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder $loginUrlBuilder
     ) {
         parent::__construct($context, $registry);
         $this->config = $config;
         $this->authorization = $context->getAuthorization();
         $this->loginUrlBuilder = $loginUrlBuilder;
+        $this->permission = $permission;
     }
 
     /**
@@ -83,15 +90,11 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
      */
     private function isButtonAvailable()
     {
-        if (!$this->config->isEnabled()) {
+        if (!$this->permission->allowLoginAsCustomer()) {
             return false;
         }
 
         if (!$this->getCustomerId()) {
-            return false;
-        }
-
-        if (!$this->authorization->isAllowed('MagedIn_LoginAsCustomer::login_button')) {
             return false;
         }
 

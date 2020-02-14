@@ -31,8 +31,8 @@
                 <field id="secret_key_expiration_time" translate="label comment" type="text" sortOrder="120"
                        showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Expiration Time</label>
-                    <comment>This is the amount time, IN SECONDS, that the generated secret key will be valid.
-                    For security reasons it can't be between 30 and 3600 (1 hour) seconds.</comment>
+                    <comment><![CDATA[This is the amount time, IN SECONDS, that the generated secret key will be valid.
+                    For security reasons it can't be between 30 and 3600 (1 hour) seconds.]]></comment>
                 </field>
             </group>
         </section>
