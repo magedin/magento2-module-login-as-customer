@@ -11,7 +11,7 @@ use Magento\Customer\Model\Customer;
  *
  * @package MagedIn\LoginAsCustomer\Model
  */
-class CustomerAuthenticator
+class CustomerAuthenticator implements AuthenticatorInterface
 {
     /**
      * @var \Magento\Customer\Model\Session
@@ -32,17 +32,18 @@ class CustomerAuthenticator
     }
 
     /**
-     * @param int $customerId
+     * @param int $entityId
+     * @param int $adminUserId
      *
-     * @return Customer|null
+     * @return object|null
      */
-    public function authenticate(int $customerId, int $adminUserId) : ?Customer
+    public function authenticate(int $entityId, int $adminUserId) : ?object
     {
         if ($this->session->isLoggedIn()) {
             $this->session->logout();
         }
 
-        if (!$this->session->loginById($customerId)) {
+        if (!$this->session->loginById($entityId)) {
             /** @todo Do something when authentication fails. */
             return null;
         }

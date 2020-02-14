@@ -25,18 +25,18 @@ class LoginProcessor implements LoginProcessorInterface
     private $messageManager;
 
     /**
-     * @var CustomerAuthenticator
+     * @var AuthenticatorInterface
      */
-    private $customerAuthenticator;
+    private $authenticator;
 
     public function __construct(
-        \MagedIn\LoginAsCustomer\Model\CustomerAuthenticator $customerAuthenticator,
+        \MagedIn\LoginAsCustomer\Model\AuthenticatorInterface $authenticator,
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Framework\Message\ManagerInterface $messageManager
     ) {
         $this->eventManager = $eventManager;
         $this->messageManager = $messageManager;
-        $this->customerAuthenticator = $customerAuthenticator;
+        $this->authenticator = $authenticator;
     }
 
     /**
@@ -45,9 +45,9 @@ class LoginProcessor implements LoginProcessorInterface
     public function process(int $customerId, int $adminUserId) : ?Customer
     {
         /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = $this->customerAuthenticator->authenticate($customerId, $adminUserId);
+        $customer = $this->authenticator->authenticate($customerId, $adminUserId);
 
-        if (!$customer->getId()) {
+        if (!$customer || !$customer->getId()) {
             $this->eventManager->dispatch('magedin_login_as_customer_fail', [
                 'customer_id'   => $customerId,
                 'admin_user_id' => $adminUserId
