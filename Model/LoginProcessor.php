@@ -45,7 +45,7 @@ class LoginProcessor implements LoginProcessorInterface
     public function process(int $customerId, int $adminUserId) : ?Customer
     {
         /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = $this->customerAuthenticator->authenticate($customerId);
+        $customer = $this->customerAuthenticator->authenticate($customerId, $adminUserId);
 
         if (!$customer->getId()) {
             $this->eventManager->dispatch('magedin_login_as_customer_fail', [
@@ -56,7 +56,10 @@ class LoginProcessor implements LoginProcessorInterface
             return null;
         }
 
-        $this->eventManager->dispatch('magedin_login_as_customer_success', ['customer' => $customer]);
+        $this->eventManager->dispatch('magedin_login_as_customer_success', [
+            'customer'      => $customer,
+            'admin_user_id' => $adminUserId
+        ]);
 
         return $customer;
     }

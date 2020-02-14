@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
+use Magento\Customer\Model\Customer;
+
 /**
  * Class CustomerAuthenticator
  *
@@ -16,18 +18,25 @@ class CustomerAuthenticator
      */
     private $session;
 
+    /**
+     * @var \MagedIn\LoginAsCustomer\Service\AdminUserService
+     */
+    private $adminUserService;
+
     public function __construct(
-        \Magento\Customer\Model\Session $session
+        \Magento\Customer\Model\Session $session,
+        \MagedIn\LoginAsCustomer\Service\AdminUserService $adminUserService
     ) {
         $this->session = $session;
+        $this->adminUserService = $adminUserService;
     }
 
     /**
      * @param int $customerId
      *
-     * @return \Magento\Customer\Model\Customer|null
+     * @return Customer|null
      */
-    public function authenticate(int $customerId) : ?\Magento\Customer\Model\Customer
+    public function authenticate(int $customerId, int $adminUserId) : ?Customer
     {
         if ($this->session->isLoggedIn()) {
             $this->session->logout();
@@ -37,6 +46,9 @@ class CustomerAuthenticator
             /** @todo Do something when authentication fails. */
             return null;
         }
+
+        $this->session->regenerateId();
+        $this->adminUserService->registerAdminUser($adminUserId);
 
         $customer = $this->session->getCustomer();
         return $customer;

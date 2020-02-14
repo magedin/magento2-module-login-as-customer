@@ -33,16 +33,23 @@ class Auth extends Action
      */
     private $loginProcessor;
 
+    /**
+     * @var \MagedIn\LoginAsCustomer\Service\AdminUserService
+     */
+    private $adminUserService;
+
     public function __construct(
         Context $context,
         UrlParametersEncryptorInterface $urlParametersEncryptor,
         ParametersValidator $parametersValidator,
-        LoginProcessorInterface $loginProcessor
+        LoginProcessorInterface $loginProcessor,
+        \MagedIn\LoginAsCustomer\Service\AdminUserService $adminUserService
     ) {
         parent::__construct($context);
         $this->urlParametersEncryptor = $urlParametersEncryptor;
         $this->parametersValidator = $parametersValidator;
         $this->loginProcessor = $loginProcessor;
+        $this->adminUserService = $adminUserService;
     }
 
     /**
@@ -71,7 +78,10 @@ class Auth extends Action
             return $this->redirectToLogin();
         }
 
-        $this->messageManager->addSuccessMessage(__('You are now logged in as %1.', $customer->getName()));
+        $user = $this->adminUserService->getRegisteredAdminUser();
+        $this->messageManager->addSuccessMessage(
+            __('Hi, %1! You are now logged in as %2.', $user->getName(), $customer->getName())
+        );
         return $this->redirectToCustomerAccount();
     }
 
