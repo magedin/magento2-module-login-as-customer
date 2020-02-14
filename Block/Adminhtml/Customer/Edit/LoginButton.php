@@ -70,10 +70,6 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
      */
     private function getButtonInfo() : array
     {
-        if (!$this->getCustomerId()) {
-            return [];
-        }
-
         return [
             'label'      => __('Login As Customer'),
             'title'      => __('Login as this customer in the frontend and access customer panel.'),
