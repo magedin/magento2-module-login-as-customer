@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace MagedIn\LoginAsCustomer\Model;
 
 use Magento\Customer\Model\Customer;
-use Magento\Framework\App\ResponseInterface;
 
 /**
  * Class LoginProcessor

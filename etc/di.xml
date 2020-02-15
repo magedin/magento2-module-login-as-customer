@@ -13,6 +13,22 @@
                 type="MagedIn\LoginAsCustomer\Plugin\AddLoginActionToCustomerListing"/>
     </type>
 
+    <virtualType name="MagedInLoginAsCustomerSessionStorage" type="Magento\Framework\Session\Storage">
+        <arguments>
+            <argument name="namespace" xsi:type="string">magedin_loginascustomer</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MagedIn\LoginAsCustomer\Model\Session">
+        <arguments>
+<!--            <argument name="configShare" xsi:type="object">Magento\Customer\Model\Config\Share\Proxy</argument>-->
+<!--            <argument name="customerUrl" xsi:type="object">Magento\Customer\Model\Url\Proxy</argument>-->
+<!--            <argument name="customerResource" xsi:type="object">Magento\Customer\Model\ResourceModel\Customer\Proxy</argument>-->
+            <argument name="storage" xsi:type="object">MagedInLoginAsCustomerSessionStorage</argument>
+<!--            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>-->
+        </arguments>
+    </type>
+
     <type name="MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder">
         <arguments>
             <argument name="url" xsi:type="object" shared="false">Magento\Framework\Url</argument>

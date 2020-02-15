@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace MagedIn\LoginAsCustomer\Service;
 
-use Magento\Customer\Model\Session;
+use MagedIn\LoginAsCustomer\Model\Session;
 use Magento\User\Api\Data\UserInterface;
 
 /**
@@ -20,11 +20,6 @@ class AdminUserService
     private $user;
 
     /**
-     * @var Session
-     */
-    private $session;
-
-    /**
      * @var \Magento\User\Model\UserFactory
      */
     private $userFactory;
@@ -34,14 +29,19 @@ class AdminUserService
      */
     private $userResource;
 
+    /**
+     * @var Session
+     */
+    private $session;
+
     public function __construct(
-        \Magento\Customer\Model\Session $session,
+        \MagedIn\LoginAsCustomer\Model\Session $session,
         \Magento\User\Model\UserFactory $userFactory,
         \Magento\User\Model\ResourceModel\User $userResource
     ) {
-        $this->session = $session;
         $this->userFactory = $userFactory;
         $this->userResource = $userResource;
+        $this->session = $session;
     }
 
     /**
@@ -69,6 +69,7 @@ class AdminUserService
      */
     public function registerAdminUser(int $adminUserId) : self
     {
+        $this->initSession();
         $this->session->setLoggedAsCustomerAdminUserId($adminUserId);
         return $this;
     }
@@ -78,7 +79,21 @@ class AdminUserService
      */
     private function getAdminUserId()
     {
+        $this->initSession();
         $adminUserId = (int) $this->session->getLoggedAsCustomerAdminUserId();
         return $adminUserId;
+    }
+
+    /**
+     * @return $this
+     */
+    private function initSession() : self
+    {
+        try {
+            $this->session->start();
+        } catch (\Exception $e) {
+        }
+
+        return $this;
     }
 }

@@ -48,7 +48,6 @@ class CustomerAuthenticator implements AuthenticatorInterface
             return null;
         }
 
-        $this->session->regenerateId();
         $this->adminUserService->registerAdminUser($adminUserId);
 
         $customer = $this->session->getCustomer();
