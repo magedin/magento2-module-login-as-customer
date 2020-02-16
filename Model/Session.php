@@ -36,6 +36,15 @@ class Session extends SessionManager
     }
 
     /**
+     * @return $this
+     */
+    public function unsetLoggedAsCustomerAdminUserId() : self
+    {
+        $this->storage->unsetData(self::KEY, null);
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getLoggedAsCustomerAdminUserId() : int

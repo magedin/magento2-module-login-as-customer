@@ -75,6 +75,16 @@ class AdminUserService
     }
 
     /**
+     * @return $this
+     */
+    public function unregisterAdminUser() : self
+    {
+        $this->initSession();
+        $this->session->unsetLoggedAsCustomerAdminUserId();
+        return $this;
+    }
+
+    /**
      * @return int
      */
     private function getAdminUserId()
