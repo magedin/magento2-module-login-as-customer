@@ -4,9 +4,6 @@
         <add id="MagedIn_LoginAsCustomer::login_as_customer" title="Login as Customer" translate="title"
              module="MagedIn_LoginAsCustomer" parent="Magento_Customer::customer" sortOrder="90"
              resource="MagedIn_LoginAsCustomer::login_as_customer"/>
-        <add id="MagedIn_LoginAsCustomer::logging" title="Logging" translate="title"
-             module="MagedIn_LoginAsCustomer" parent="MagedIn_LoginAsCustomer::login_as_customer" sortOrder="10"
-             resource="MagedIn_LoginAsCustomer::logging" action="loginascustomer/customer/"/>
         <add id="MagedIn_LoginAsCustomer::config" title="Configuration" translate="title"
              module="MagedIn_LoginAsCustomer" parent="MagedIn_LoginAsCustomer::login_as_customer" sortOrder="20"
              resource="MagedIn_LoginAsCustomer::config_section"
