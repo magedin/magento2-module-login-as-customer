@@ -1,0 +1,26 @@
+{
+    "name": "magedin/login-as-customer",
+    "description": "With this module the admin user will be able to login as any customer in the front store.",
+    "type": "magento2-module",
+    "authors": [
+        {
+            "name": "Tiago Sampaio",
+            "email": "tiago.sampaio@magedin.com"
+        }
+    ],
+    "license": [
+        "OSL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MagedIn\\LoginAsCustomer\\": ""
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "magento/product-community-edition": "~2.3"
+    }
+}
