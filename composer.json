@@ -18,9 +18,5 @@
         "psr-4": {
             "MagedIn\\LoginAsCustomer\\": ""
         }
-    },
-    "minimum-stability": "stable",
-    "require": {
-        "magento/product-community-edition": "~2.3"
     }
 }
