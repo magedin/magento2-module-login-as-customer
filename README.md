@@ -8,11 +8,11 @@
 
 For Magento 2.3 and later.
 
-### What is Login as Customer
+## What is Login as Customer
 
 Login as customer is a module that allows your sales assistant, or any other administrative person with required permissions, to login in to the store's customer account so it's easy to the sales assistant to assist the customer with the sales process.
 
-### Why use our Login as Customer extension?
+## Why use our Login as Customer extension?
 
 There are times when your customer may need some help to select products, add them to the shopping cart and finish the order, for instance. Or any other problem that could happen to him.
 
@@ -20,7 +20,7 @@ This module exists for the reason of letting the sales assistant to login to the
 
 This module can be very handy to help your customers.
 
-### Features
+## Features
 
 This module includes the following features:
 
@@ -28,7 +28,7 @@ This module includes the following features:
 - Specific permission options to allow only some admin roles to access this funcionality;
 - Secure login process from the backend panel to frontend panel;
 
-### Installation
+## Installation
 
 You can download this module and install it direct in your Magento `app/code` directory but I really recomend you to install using `composer` installation process described bellow.
 
@@ -38,17 +38,17 @@ You can download this module and install it direct in your Magento `app/code` di
 composer require magedin/login-as-customer
 ```
 
-### Contribution
+## Contribution
 
 Want to contribute to this extension? The quickest way is to open a [pull request](https://github.com/magedin/LoginAsCustomer/pulls) on GitHub.
 
-### Support
+## Support
 
 If you encounter any problems or bugs, please open an [issue](https://github.com/magedin/LoginAsCustomer/issues) on GitHub.
 
 Need help setting up or want to customize this extension to meet your business needs? Please email support@magedin.com and if we like your idea we will add this feature for free or at a discounted rate.
 
-### Magento 2 Extensions
+## Magento 2 Extensions
 
 Coming soon.
 
