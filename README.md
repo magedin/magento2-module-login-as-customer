@@ -1,6 +1,8 @@
 # Login as Customer for Magento 2
 
+[![Latest Stable Version](https://poser.okvpn.org/magedin/login-as-customer/v/stable)](https://packagist.org/packages/magedin/login-as-customer)
 [![Total Downloads](https://poser.okvpn.org/magedin/login-as-customer/downloads)](https://packagist.org/packages/magedin/login-as-customer)
+[![License](https://poser.okvpn.org/magedin/login-as-customer/license)](https://packagist.org/packages/magedin/login-as-customer)
 
 #### This module enables any admin user with permission to login as any customer in the front store.
 
