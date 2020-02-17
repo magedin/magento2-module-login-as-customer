@@ -25,11 +25,6 @@
                     <label><![CDATA[Enabled]]></label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="disable_page_cache" translate="label comment" type="select" sortOrder="110"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Disable Page Cache For Admin User</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
             </group>
             <group id="security" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
                    showInStore="1">
