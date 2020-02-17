@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
+<!--
+  Copyright © MagedIn. All rights reserved.
+  See COPYING.txt for license details.
+
+  @author Tiago Sampaio <tiago.sampaio@magedin.com>
+  -->
+
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="magedin_login_as_customer_secret" resource="default" engine="innodb" comment="Login as Customer Table">

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Copyright © MagedIn. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @author Tiago Sampaio <tiago.sampaio@magedin.com>
+ */
 
 namespace MagedIn\LoginAsCustomer\Model\Config\Source;
 
