@@ -34,9 +34,9 @@ class Login extends Action
     private $customerRepository;
 
     /**
-     * @var \Magento\Customer\Model\ResourceModel\CustomerFactory
+     * @var \Magento\Customer\Model\ResourceModel\Customer
      */
-    private $customerResourceFactory;
+    private $customerResource;
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
@@ -67,7 +67,7 @@ class Login extends Action
         Action\Context $context,
         \MagedIn\LoginAsCustomer\Model\LoginFactory $loginFactory,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Customer\Model\ResourceModel\CustomerFactory $customerResourceFactory,
+        \Magento\Customer\Model\ResourceModel\Customer $customerResource,
         \Magento\Backend\Model\Auth\Session $session,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder $frontendUrlBuilder,
@@ -77,7 +77,7 @@ class Login extends Action
         parent::__construct($context);
         $this->loginFactory = $loginFactory;
         $this->customerRepository = $customerRepository;
-        $this->customerResourceFactory = $customerResourceFactory;
+        $this->customerResource = $customerResource;
         $this->session = $session;
         $this->storeManager = $storeManager;
         $this->frontendUrlBuilder = $frontendUrlBuilder;
@@ -160,10 +160,7 @@ class Login extends Action
             return false;
         }
 
-        /** @var \Magento\Customer\Model\ResourceModel\Customer $resource */
-        $resource = $this->customerResourceFactory->create();
-
-        if (!$resource->checkCustomerId($customerId)) {
+        if (!$this->customerResource->checkCustomerId($customerId)) {
             return false;
         }
 
