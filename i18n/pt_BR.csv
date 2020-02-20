@@ -1,0 +1,20 @@
+"Login As Customer","Logar como Cliente"
+"Login as this customer in the frontend and access customer panel.","Logar-se como este cliente no front store e acessar seu painel."
+"Please inform a valid customer ID.","Por favor, informe um ID de cliente válido."
+"Could not login customer.","Não foi possível logar o cliente."
+"Hi, %1! You are now logged in as %2.","Olá, %1! Neste momento você está logado como %2."
+"Invalid parameters.","Parâmetros inválidos."
+"Customer does not exist or customer parameters are invalid.","O cliente não existe ou os parâmetros do cliente são inválidos."
+"Store does not exist or store parameters are invalid.","A loja não existe ou os parâmetros da loja são inválidos."
+"Secret parameter is not valid.","O parâmetro chave secreta não é válido."
+"Admin user parameter is not valid.","O parâmetro usuário administrativo não é válido."
+"Secret was not found or is expired.","A chave secreta não foi encontrado ou expirou."
+"Login as Customer","Logar-se como Cliente"
+Configuration,Configuração
+MagedIn,MagedIn
+"General Settings","Configurações Gerais"
+Enabled,Habilitado
+"Security Configuration","Configurações de Segurança"
+"Expiration Time","Tempo de Expiração"
+"This is the amount time, IN SECONDS, that the generated secret key will be valid. For security reasons it can't be between 30 and 3600 seconds (1 hour).","Este é o total de tempo, EM SEGUNDOS, que a chave secreta terá validade. Por uma questão de segurança deve ser entre 30 e 3600 segundos (1 hora)."
+"All the configurations about the security of this module is under this tab.","Todas as configurações sobre segurança deste módulo estão abaixo nesta tab."

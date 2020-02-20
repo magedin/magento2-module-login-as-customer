@@ -1,0 +1,22 @@
+"Login As Customer","Login As Customer"
+"Login as this customer in the frontend and access customer panel.","Login as this customer in the frontend and access customer panel."
+"Please inform a valid customer ID.","Please inform a valid customer ID."
+"Could not login customer.","Could not login customer."
+"Hi, %1! You are now logged in as %2.","Hi, %1! You are now logged in as %2."
+"In Actions Column","In Actions Column"
+"In New Column","In New Column"
+"Invalid parameters.","Invalid parameters."
+"Customer does not exist or customer parameters are invalid.","Customer does not exist or customer parameters are invalid."
+"Store does not exist or store parameters are invalid.","Store does not exist or store parameters are invalid."
+"Secret parameter is not valid.","Secret parameter is not valid."
+"Admin user parameter is not valid.","Admin user parameter is not valid."
+"Secret was not found or is expired.","Secret was not found or is expired."
+"Login as Customer","Login as Customer"
+Configuration,Configuration
+MagedIn,MagedIn
+"General Settings","General Settings"
+Enabled,Enabled
+"Security Configuration","Security configuration"
+"Expiration Time","Expiration Time"
+"This is the amount time, IN SECONDS, that the generated secret key will be valid. For security reasons it can't be between 30 and 3600 seconds (1 hour).","This is the amount time, IN SECONDS, that the generated secret key will be valid. For security reasons it can't be between 30 and 3600 seconds (1 hour)."
+"All the configurations about the security of this module is under this tab.","All the configurations about the security of this module is under this tab."
