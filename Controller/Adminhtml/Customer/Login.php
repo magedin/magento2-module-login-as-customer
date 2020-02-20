@@ -24,19 +24,9 @@ use MagedIn\LoginAsCustomer\Api\Data;
 class Login extends Action
 {
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\LoginFactory
-     */
-    private $loginFactory;
-
-    /**
      * @var \Magento\Customer\Api\CustomerRepositoryInterface
      */
     private $customerRepository;
-
-    /**
-     * @var \Magento\Customer\Model\ResourceModel\Customer
-     */
-    private $customerResource;
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
@@ -63,26 +53,29 @@ class Login extends Action
      */
     private $urlParametersEncryptor;
 
+    /**
+     * @var \MagedIn\LoginAsCustomer\Model\Validator\CustomerIdValidator
+     */
+    private $customerIdValidator;
+
     public function __construct(
         Action\Context $context,
-        \MagedIn\LoginAsCustomer\Model\LoginFactory $loginFactory,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Customer\Model\ResourceModel\Customer $customerResource,
         \Magento\Backend\Model\Auth\Session $session,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder $frontendUrlBuilder,
         \MagedIn\LoginAsCustomer\Model\SecretManagerInterface $secretManager,
-        \MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface $urlParametersEncryptor
+        \MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface $urlParametersEncryptor,
+        \MagedIn\LoginAsCustomer\Model\Validator\CustomerIdValidator $customerIdValidator
     ) {
         parent::__construct($context);
-        $this->loginFactory = $loginFactory;
         $this->customerRepository = $customerRepository;
-        $this->customerResource = $customerResource;
         $this->session = $session;
         $this->storeManager = $storeManager;
         $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->secretManager = $secretManager;
         $this->urlParametersEncryptor = $urlParametersEncryptor;
+        $this->customerIdValidator = $customerIdValidator;
     }
 
     /**
@@ -92,7 +85,7 @@ class Login extends Action
     {
         $customerId = $this->getCustomerId();
 
-        if (!$this->validateCustomerId($customerId)) {
+        if (!$this->customerIdValidator->validate($customerId)) {
             $this->messageManager->addErrorMessage(__('Please inform a valid customer ID.'));
 
             return $this->_redirect('customer/index/index');
@@ -147,24 +140,6 @@ class Login extends Action
         $customerId = (int) $this->getRequest()->getParam(ParametersValidator::PARAM_CUSTOMER_ID);
 
         return $customerId;
-    }
-
-    /**
-     * @param int $customerId
-     *
-     * @return bool
-     */
-    private function validateCustomerId(int $customerId) : bool
-    {
-        if (!$customerId) {
-            return false;
-        }
-
-        if (!$this->customerResource->checkCustomerId($customerId)) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
