@@ -28,6 +28,11 @@ class Config
     /**
      * @var string
      */
+    const XML_PATH_REDIRECT_AFTER_LOGIN = 'magedin_loginascustomer/general/redirect_after_login';
+
+    /**
+     * @var string
+     */
     const XML_PATH_SECRET_KEY_EXPIRATION_TIME = 'magedin_loginascustomer/security/secret_key_expiration_time';
 
     /**
@@ -53,10 +58,15 @@ class Config
      */
     public function isEnabled() : bool
     {
-        return (bool) $this->scopeConfig->getValue(
-            self::XML_PATH_ENABLED,
-            ScopeInterface::SCOPE_STORE
-        );
+        return (bool) $this->getConfig(self::XML_PATH_ENABLED);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirectAfterLogin() : ?string
+    {
+        return (string) $this->getConfig(self::XML_PATH_REDIRECT_AFTER_LOGIN);
     }
 
     /**
@@ -64,9 +74,17 @@ class Config
      */
     public function getSecretKeyExpirationTime() : int
     {
-        return (int) $this->scopeConfig->getValue(
-            self::XML_PATH_SECRET_KEY_EXPIRATION_TIME,
-            ScopeInterface::SCOPE_STORE
-        );
+        return (int) $this->getConfig(self::XML_PATH_SECRET_KEY_EXPIRATION_TIME);
+    }
+
+    /**
+     * @param string $path
+     * @param string $scopeType
+     *
+     * @return string
+     */
+    private function getConfig(string $path, $scopeType = ScopeInterface::SCOPE_STORE)
+    {
+        return $this->scopeConfig->getValue($path, $scopeType);
     }
 }

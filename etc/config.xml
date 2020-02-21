@@ -11,8 +11,7 @@
         <magedin_loginascustomer>
             <general>
                 <enable>1</enable>
-                <customer_grid_login_column>actions</customer_grid_login_column>
-                <disable_page_cache>0</disable_page_cache>
+                <redirect_after_login>customer/account/edit</redirect_after_login>
             </general>
             <security>
                 <secret_key_expiration_time>60</secret_key_expiration_time>

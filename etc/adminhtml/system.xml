@@ -25,6 +25,12 @@
                     <label><![CDATA[Enabled]]></label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="redirect_after_login" translate="label comment" type="select" sortOrder="20"
+                       showInStore="1" showInWebsite="1" showInDefault="1">
+                    <label><![CDATA[After Login Redirect to]]></label>
+                    <source_model>MagedIn\LoginAsCustomer\Model\Config\Source\CustomerRedirectOptions</source_model>
+                    <comment><![CDATA[The user will be redirected to this page after login as a customer on front store.]]></comment>
+                </field>
             </group>
             <group id="security" translate="label comment" type="text" sortOrder="20" showInDefault="1"
                    showInWebsite="1"
