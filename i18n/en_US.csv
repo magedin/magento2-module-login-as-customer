@@ -20,3 +20,8 @@ Enabled,Enabled
 "Expiration Time","Expiration Time"
 "This is the amount time, IN SECONDS, that the generated secret key will be valid. For security reasons it can't be between 30 and 3600 seconds (1 hour).","This is the amount time, IN SECONDS, that the generated secret key will be valid. For security reasons it can't be between 30 and 3600 seconds (1 hour)."
 "All the configurations about the security of this module is under this tab.","All the configurations about the security of this module is under this tab."
+"After Login Redirect to","After Login Redirect to"
+"The user will be redirected to this page after login as a customer on front store.","The user will be redirected to this page after login as a customer on front store."
+"Customer Account Dashboard","Customer Account Dashboard"
+"Customer Account Information","Customer Account Information"
+"Customer Account Orders","Customer Account Orders"

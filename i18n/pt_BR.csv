@@ -18,3 +18,8 @@ Enabled,Habilitado
 "Expiration Time","Tempo de Expiração"
 "This is the amount time, IN SECONDS, that the generated secret key will be valid. For security reasons it can't be between 30 and 3600 seconds (1 hour).","Este é o total de tempo, EM SEGUNDOS, que a chave secreta terá validade. Por uma questão de segurança deve ser entre 30 e 3600 segundos (1 hora)."
 "All the configurations about the security of this module is under this tab.","Todas as configurações sobre segurança deste módulo estão abaixo nesta tab."
+"After Login Redirect to","Após Login Redirecionar para"
+"The user will be redirected to this page after login as a customer on front store.","O usuário será redirecionado para esta página após efetuar o login como um cliente no front store."
+"Customer Account Dashboard","Painel da Conta de Cliente"
+"Customer Account Information","Informações da Conta de Cliente"
+"Customer Account Orders","Meus Pedidos na Conta de Cliente"
