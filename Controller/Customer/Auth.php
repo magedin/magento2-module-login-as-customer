@@ -44,18 +44,25 @@ class Auth extends Action
      */
     private $adminUserService;
 
+    /**
+     * @var \MagedIn\LoginAsCustomer\Controller\CustomerRedirectorInterface
+     */
+    private $customerRedirector;
+
     public function __construct(
         Context $context,
         UrlParametersEncryptorInterface $urlParametersEncryptor,
         ParametersValidator $parametersValidator,
         LoginProcessorInterface $loginProcessor,
-        \MagedIn\LoginAsCustomer\Service\AdminUserService $adminUserService
+        \MagedIn\LoginAsCustomer\Service\AdminUserService $adminUserService,
+        \MagedIn\LoginAsCustomer\Controller\CustomerRedirectorInterface $customerRedirector
     ) {
         parent::__construct($context);
         $this->urlParametersEncryptor = $urlParametersEncryptor;
         $this->parametersValidator = $parametersValidator;
         $this->loginProcessor = $loginProcessor;
         $this->adminUserService = $adminUserService;
+        $this->customerRedirector = $customerRedirector;
     }
 
     /**
@@ -70,7 +77,7 @@ class Auth extends Action
             $this->parametersValidator->validate($params);
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-            return $this->redirectToLogin();
+            return $this->customerRedirector->redirectOnFail();
         }
 
         $customerId  = (int) $params[ParametersValidator::PARAM_CUSTOMER_ID];
@@ -81,14 +88,14 @@ class Auth extends Action
 
         if (!$customer->getId()) {
             $this->messageManager->addErrorMessage(__('Could not login customer.'));
-            return $this->redirectToLogin();
+            return $this->customerRedirector->redirectOnFail();
         }
 
         $user = $this->adminUserService->getRegisteredAdminUser();
         $this->messageManager->addSuccessMessage(
             __('Hi, %1! You are now logged in as %2.', $user->getName(), $customer->getName())
         );
-        return $this->redirectToCustomerAccount();
+        return $this->customerRedirector->redirectOnSuccess();
     }
 
     /**
@@ -100,21 +107,5 @@ class Auth extends Action
     {
         $params = $this->urlParametersEncryptor->decrypt($hash);
         return (array) $params;
-    }
-
-    /**
-     * @return ResponseInterface
-     */
-    private function redirectToLogin() : ResponseInterface
-    {
-        return $this->_redirect('customer/account/login');
-    }
-
-    /**
-     * @return ResponseInterface
-     */
-    private function redirectToCustomerAccount() : ResponseInterface
-    {
-        return $this->_redirect('customer/account');
     }
 }
