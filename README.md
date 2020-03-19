@@ -40,11 +40,11 @@ composer require magedin/login-as-customer
 
 ## Contribution
 
-Want to contribute to this extension? The quickest way is to open a [pull request](https://github.com/magedin/LoginAsCustomer/pulls) on GitHub.
+Want to contribute to this extension? The quickest way is to open a [pull request](https://github.com/magedin/magento2-login-as-customer/pulls) on GitHub.
 
 ## Support
 
-If you encounter any problems or bugs, please open an [issue](https://github.com/magedin/LoginAsCustomer/issues) on GitHub.
+If you encounter any problems or bugs, please open an [issue](https://github.com/magedin/magento2-login-as-customer/issues) on GitHub.
 
 Need help setting up or want to customize this extension to meet your business needs? Please email support@magedin.com and if we like your idea we will add this feature for free or at a discounted rate.
 
