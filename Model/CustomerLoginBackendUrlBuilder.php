@@ -6,17 +6,21 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
+use Magento\Framework\UrlInterface;
+
 /**
  * Class CustomerLoginBackendUrlBuilder
+ *
+ * This class is responsible for building URL for backend.
  */
 class CustomerLoginBackendUrlBuilder
 {
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
     private $urlBuilder;
 

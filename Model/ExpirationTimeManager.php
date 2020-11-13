@@ -6,12 +6,16 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
+use Magento\Framework\Stdlib\DateTime\DateTime;
+
 /**
  * Class ExpirationTimeManager
+ *
+ * This class is responsible for managing the expiration time.
  */
 class ExpirationTimeManager implements ExpirationTimeManagerInterface
 {
@@ -21,13 +25,13 @@ class ExpirationTimeManager implements ExpirationTimeManagerInterface
     private $config;
 
     /**
-     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     * @var DateTime
      */
     private $dateTime;
 
     public function __construct(
-        \MagedIn\LoginAsCustomer\Model\Config $config,
-        \Magento\Framework\Stdlib\DateTime\DateTime $dateTime
+        Config $config,
+        DateTime $dateTime
     ) {
         $this->config = $config;
         $this->dateTime = $dateTime;

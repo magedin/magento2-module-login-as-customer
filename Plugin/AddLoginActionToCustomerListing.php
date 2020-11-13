@@ -6,42 +6,43 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Plugin;
 
+use MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder;
+use MagedIn\LoginAsCustomer\Model\Permission;
 use Magento\Customer\Ui\Component\Listing\Column\Actions;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
 
-/**
- * Class AddLoginActionToCustomerListing
- */
 class AddLoginActionToCustomerListing
 {
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
     private $urlBuilder;
 
     /**
-     * @var \Magento\Framework\View\Element\UiComponent\ContextInterface
+     * @var ContextInterface
      */
     private $context;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder
+     * @var CustomerLoginBackendUrlBuilder
      */
     private $loginUrlBuilder;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\Permission
+     * @var Permission
      */
     private $permission;
 
     public function __construct(
-        \Magento\Framework\UrlInterface $urlBuilder,
-        \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
-        \MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder $loginUrlBuilder,
-        \MagedIn\LoginAsCustomer\Model\Permission $permission
+        UrlInterface $urlBuilder,
+        ContextInterface $context,
+        CustomerLoginBackendUrlBuilder $loginUrlBuilder,
+        Permission $permission
     ) {
         $this->urlBuilder = $urlBuilder;
         $this->context = $context;
@@ -52,6 +53,8 @@ class AddLoginActionToCustomerListing
     /**
      * @param Actions $subject
      * @param array   $dataSource
+     *
+     * @return array
      */
     public function afterPrepareDataSource(Actions $subject, array $dataSource)
     {

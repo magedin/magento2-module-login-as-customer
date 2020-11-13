@@ -5,7 +5,7 @@
  *
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Controller;
 

@@ -8,47 +8,57 @@
 
 namespace MagedIn\LoginAsCustomer\Block\Adminhtml\Customer\Edit;
 
+use MagedIn\LoginAsCustomer\Model\Config;
+use MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder;
+use MagedIn\LoginAsCustomer\Model\Permission;
+use Magento\Backend\Block\Widget\Context;
 use Magento\Customer\Block\Adminhtml\Edit\GenericButton;
+use Magento\Framework\AuthorizationInterface;
+use Magento\Framework\Registry;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Class LoginButton
+ *
+ * This class is responsible for generating a button for login action.
  */
 class LoginButton extends GenericButton implements ButtonProviderInterface
 {
     /**
-     * @var \Magento\Framework\AuthorizationInterface
+     * @var AuthorizationInterface
      */
     protected $authorization;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\Config
+     * @var Config
      */
     private $config;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder
+     * @var CustomerLoginBackendUrlBuilder
      */
     private $loginUrlBuilder;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\Permission
+     * @var Permission
      */
     private $permission;
 
     /**
      * LoginButton constructor.
      *
-     * @param \Magento\Backend\Block\Widget\Context $context
-     * @param \Magento\Framework\Registry           $registry
-     * @param \MagedIn\LoginAsCustomer\Model\Config $config
+     * @param Context                        $context
+     * @param Registry                       $registry
+     * @param Config                         $config
+     * @param Permission                     $permission
+     * @param CustomerLoginBackendUrlBuilder $loginUrlBuilder
      */
     public function __construct(
-        \Magento\Backend\Block\Widget\Context $context,
-        \Magento\Framework\Registry $registry,
-        \MagedIn\LoginAsCustomer\Model\Config $config,
-        \MagedIn\LoginAsCustomer\Model\Permission $permission,
-        \MagedIn\LoginAsCustomer\Model\CustomerLoginBackendUrlBuilder $loginUrlBuilder
+        Context $context,
+        Registry $registry,
+        Config $config,
+        Permission $permission,
+        CustomerLoginBackendUrlBuilder $loginUrlBuilder
     ) {
         parent::__construct($context, $registry);
         $this->config = $config;
@@ -60,7 +70,7 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
     /**
      * @return array
      */
-    public function getButtonData() : array
+    public function getButtonData(): array
     {
         if (!$this->isButtonAvailable()) {
             return [];
@@ -72,13 +82,13 @@ class LoginButton extends GenericButton implements ButtonProviderInterface
     /**
      * @return array
      */
-    private function getButtonInfo() : array
+    private function getButtonInfo(): array
     {
         return [
-            'label'      => __('Login As Customer'),
-            'title'      => __('Login as this customer in the frontend and access customer panel.'),
-            'class'      => 'add login login-button',
-            'on_click'   => "window.open('{$this->loginUrlBuilder->getUrl((int) $this->getCustomerId())}')",
+            'label' => __('Login As Customer'),
+            'title' => __('Login as this customer in the frontend and access customer panel.'),
+            'class' => 'add login login-button',
+            'on_click' => "window.open('{$this->loginUrlBuilder->getUrl((int) $this->getCustomerId())}')",
             'sort_order' => 70,
         ];
     }

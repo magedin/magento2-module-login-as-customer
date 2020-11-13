@@ -6,13 +6,12 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
-/**
- * Class Permission
- */
+use Magento\Framework\AuthorizationInterface;
+
 class Permission
 {
     /**
@@ -21,13 +20,13 @@ class Permission
     private $config;
 
     /**
-     * @var \Magento\Framework\AuthorizationInterface
+     * @var AuthorizationInterface
      */
     private $authorization;
 
     public function __construct(
         Config $config,
-        \Magento\Framework\AuthorizationInterface $authorization
+        AuthorizationInterface $authorization
     ) {
         $this->config = $config;
         $this->authorization = $authorization;

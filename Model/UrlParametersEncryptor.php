@@ -6,28 +6,28 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
-/**
- * Class UrlParametersEncryptor
- */
+use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Framework\Serialize\SerializerInterface;
+
 class UrlParametersEncryptor implements UrlParametersEncryptorInterface
 {
     /**
-     * @var \Magento\Framework\Serialize\SerializerInterface
+     * @var SerializerInterface
      */
     private $serializer;
 
     /**
-     * @var \Magento\Framework\Encryption\EncryptorInterface
+     * @var EncryptorInterface
      */
     private $encryptor;
 
     public function __construct(
-        \Magento\Framework\Serialize\SerializerInterface $serializer,
-        \Magento\Framework\Encryption\EncryptorInterface $encryptor
+        SerializerInterface $serializer,
+        EncryptorInterface $encryptor
     ) {
         $this->serializer = $serializer;
         $this->encryptor = $encryptor;

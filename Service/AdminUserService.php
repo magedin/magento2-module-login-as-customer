@@ -6,16 +6,16 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Service;
 
 use MagedIn\LoginAsCustomer\Model\Session;
 use Magento\User\Api\Data\UserInterface;
+use Magento\User\Model\ResourceModel\User;
+use Magento\User\Model\UserFactory;
+use Psr\Log\LoggerInterface;
 
-/**
- * Class AdminUserService
- */
 class AdminUserService
 {
     /**
@@ -24,12 +24,12 @@ class AdminUserService
     private $user;
 
     /**
-     * @var \Magento\User\Model\UserFactory
+     * @var UserFactory
      */
     private $userFactory;
 
     /**
-     * @var \Magento\User\Model\ResourceModel\User
+     * @var User
      */
     private $userResource;
 
@@ -38,14 +38,21 @@ class AdminUserService
      */
     private $session;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
-        \MagedIn\LoginAsCustomer\Model\Session $session,
-        \Magento\User\Model\UserFactory $userFactory,
-        \Magento\User\Model\ResourceModel\User $userResource
+        Session $session,
+        UserFactory $userFactory,
+        User $userResource,
+        LoggerInterface $logger
     ) {
         $this->userFactory = $userFactory;
         $this->userResource = $userResource;
         $this->session = $session;
+        $this->logger = $logger;
     }
 
     /**
@@ -94,8 +101,7 @@ class AdminUserService
     private function getAdminUserId()
     {
         $this->initSession();
-        $adminUserId = (int) $this->session->getLoggedAsCustomerAdminUserId();
-        return $adminUserId;
+        return (int) $this->session->getLoggedAsCustomerAdminUserId();
     }
 
     /**
@@ -106,6 +112,7 @@ class AdminUserService
         try {
             $this->session->start();
         } catch (\Exception $e) {
+            $this->logger->error($e);
         }
 
         return $this;

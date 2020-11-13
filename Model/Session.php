@@ -6,7 +6,7 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
@@ -20,6 +20,8 @@ use Magento\Framework\Session\ValidatorInterface;
 
 /**
  * Class Session
+ *
+ * This class handles the session for login as customer.
  */
 class Session extends SessionManager
 {

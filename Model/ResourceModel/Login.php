@@ -6,16 +6,14 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use Magento\Framework\DB\Sql\Expression;
 use MagedIn\LoginAsCustomer\Api\Data;
 
-/**
- * Class Login
- */
 class Login extends AbstractDb
 {
     /**
@@ -58,29 +56,29 @@ class Login extends AbstractDb
     /**
      * @param int $customerId
      *
-     * @return bool
+     * @return int
      */
     public function deleteByCustomerId(int $customerId) : int
     {
-        return $this->deleteByExpression(new \Zend\Db\Sql\Expression("customer_id = {$customerId}"));
+        return $this->deleteByExpression(new Expression("customer_id = {$customerId}"));
     }
 
     /**
      * @param string $secret
      *
-     * @return bool
+     * @return int
      */
     public function deleteBySecret(string $secret) : int
     {
-        return $this->deleteByExpression(new \Zend\Db\Sql\Expression("secret = {$secret}"));
+        return $this->deleteByExpression(new Expression("secret = {$secret}"));
     }
 
     /**
-     * @param \Zend\Db\Sql\Expression $expression
+     * @param Expression $expression
      *
      * @return int
      */
-    private function deleteByExpression(\Zend\Db\Sql\Expression $expression) : int
+    private function deleteByExpression(Expression $expression) : int
     {
         $result = $this->getConnection()->delete(self::TABLE, $expression->getExpression());
         return (int) $result;

@@ -6,19 +6,22 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
 use Magento\Customer\Model\Customer;
+use Magento\Framework\Event\ManagerInterface;
 
 /**
  * Class LoginProcessor
+ *
+ * Login processor model class.
  */
 class LoginProcessor implements LoginProcessorInterface
 {
     /**
-     * @var \Magento\Framework\Event\ManagerInterface
+     * @var ManagerInterface
      */
     private $eventManager;
 
@@ -34,7 +37,7 @@ class LoginProcessor implements LoginProcessorInterface
 
     public function __construct(
         \MagedIn\LoginAsCustomer\Model\AuthenticatorInterface $authenticator,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
+        ManagerInterface $eventManager,
         \Magento\Framework\Message\ManagerInterface $messageManager
     ) {
         $this->eventManager = $eventManager;
@@ -47,7 +50,7 @@ class LoginProcessor implements LoginProcessorInterface
      */
     public function process(int $customerId, int $adminUserId) : ?Customer
     {
-        /** @var \Magento\Customer\Model\Customer $customer */
+        /** @var Customer $customer */
         $customer = $this->authenticator->authenticate($customerId, $adminUserId);
 
         if (!$customer || !$customer->getId()) {

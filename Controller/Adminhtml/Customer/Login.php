@@ -6,43 +6,48 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Controller\Adminhtml\Customer;
 
+use MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder;
+use MagedIn\LoginAsCustomer\Model\SecretManagerInterface;
 use MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface;
+use MagedIn\LoginAsCustomer\Model\Validator\CustomerIdValidator;
 use MagedIn\LoginAsCustomer\Model\Validator\ParametersValidator;
 use Magento\Backend\App\Action;
+use Magento\Backend\Model\Auth\Session;
+use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Customer\Api\Data\CustomerInterface;
 use MagedIn\LoginAsCustomer\Api\Data;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class Login
- */
 class Login extends Action
 {
     /**
-     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     * @var CustomerRepositoryInterface
      */
     private $customerRepository;
 
     /**
-     * @var \Magento\Backend\Model\Auth\Session
+     * @var Session
      */
     private $session;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     private $storeManager;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder
+     * @var FrontendUrlBuilder
      */
     private $frontendUrlBuilder;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\SecretManagerInterface
+     * @var SecretManagerInterface
      */
     private $secretManager;
 
@@ -52,19 +57,19 @@ class Login extends Action
     private $urlParametersEncryptor;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\Validator\CustomerIdValidator
+     * @var CustomerIdValidator
      */
     private $customerIdValidator;
 
     public function __construct(
         Action\Context $context,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Backend\Model\Auth\Session $session,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \MagedIn\LoginAsCustomer\Model\FrontendUrlBuilder $frontendUrlBuilder,
-        \MagedIn\LoginAsCustomer\Model\SecretManagerInterface $secretManager,
-        \MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface $urlParametersEncryptor,
-        \MagedIn\LoginAsCustomer\Model\Validator\CustomerIdValidator $customerIdValidator
+        CustomerRepositoryInterface $customerRepository,
+        Session $session,
+        StoreManagerInterface $storeManager,
+        FrontendUrlBuilder $frontendUrlBuilder,
+        SecretManagerInterface $secretManager,
+        UrlParametersEncryptorInterface $urlParametersEncryptor,
+        CustomerIdValidator $customerIdValidator
     ) {
         parent::__construct($context);
         $this->customerRepository = $customerRepository;
@@ -114,13 +119,14 @@ class Login extends Action
     }
 
     /**
+     * @param int $customerId
+     *
      * @return CustomerInterface|null
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
-    private function initCustomer(int $customerId) : ?CustomerInterface
+    private function initCustomer(int $customerId): ?CustomerInterface
     {
-        /** @var CustomerInterface $customer */
         $customer = $this->customerRepository->getById($customerId);
 
         if (!$customer->getId()) {
@@ -133,31 +139,31 @@ class Login extends Action
     /**
      * @return int
      */
-    private function getCustomerId() : int
+    private function getCustomerId(): int
     {
-        $customerId = (int) $this->getRequest()->getParam(ParametersValidator::PARAM_CUSTOMER_ID);
-
-        return $customerId;
+        return (int) $this->getRequest()->getParam(ParametersValidator::PARAM_CUSTOMER_ID);
     }
 
     /**
+     * @param Data\LoginInterface $login
+     *
      * @return string
+     * @throws NoSuchEntityException
      */
-    private function getFrontendUrl(Data\LoginInterface $login) : string
+    private function getFrontendUrl(Data\LoginInterface $login): string
     {
         $data = [
-            ParametersValidator::PARAM_STORE_ID      => $login->getStoreId(),
-            ParametersValidator::PARAM_CUSTOMER_ID   => $login->getCustomerId(),
-            ParametersValidator::PARAM_SECRET        => $login->getSecret(),
+            ParametersValidator::PARAM_STORE_ID => $login->getStoreId(),
+            ParametersValidator::PARAM_CUSTOMER_ID => $login->getCustomerId(),
+            ParametersValidator::PARAM_SECRET => $login->getSecret(),
             ParametersValidator::PARAM_ADMIN_USER_ID => $login->getAdminUserId(),
         ];
 
         $params = [
             ParametersValidator::PARAM_HASH => $this->urlParametersEncryptor->encrypt($data),
-            '_nosid'                        => true,
+            '_nosid' => true,
         ];
 
-        /** @var \Magento\Store\Api\Data\StoreInterface $store */
         $store = $this->storeManager->getStore($login->getStoreId());
         $this->frontendUrlBuilder->setStore($store);
 

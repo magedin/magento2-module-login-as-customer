@@ -5,22 +5,26 @@
  *
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model\Validator;
 
+use Magento\Customer\Model\ResourceModel\Customer;
+
 /**
  * Class CustomerIdValidator
+ *
+ * Customer identifier validator model class.
  */
 class CustomerIdValidator
 {
     /**
-     * @var \Magento\Customer\Model\ResourceModel\Customer
+     * @var Customer
      */
     private $customerResource;
 
     public function __construct(
-        \Magento\Customer\Model\ResourceModel\Customer $customerResource
+        Customer $customerResource
     ) {
         $this->customerResource = $customerResource;
     }

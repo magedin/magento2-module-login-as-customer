@@ -6,7 +6,7 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Observer;
 
@@ -16,6 +16,8 @@ use Magento\Framework\Event\ObserverInterface;
 
 /**
  * Class CustomerLogoutObserver
+ *
+ * Customer logout observer class.
  */
 class CustomerLogoutObserver implements ObserverInterface
 {

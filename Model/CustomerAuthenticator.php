@@ -6,14 +6,16 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
-use Magento\Customer\Model\Customer;
+use MagedIn\LoginAsCustomer\Service\AdminUserService;
 
 /**
  * Class CustomerAuthenticator
+ *
+ * Customer authenticator model class.
  */
 class CustomerAuthenticator implements AuthenticatorInterface
 {
@@ -23,13 +25,13 @@ class CustomerAuthenticator implements AuthenticatorInterface
     private $session;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Service\AdminUserService
+     * @var AdminUserService
      */
     private $adminUserService;
 
     public function __construct(
         \Magento\Customer\Model\Session $session,
-        \MagedIn\LoginAsCustomer\Service\AdminUserService $adminUserService
+        AdminUserService $adminUserService
     ) {
         $this->session = $session;
         $this->adminUserService = $adminUserService;
@@ -54,7 +56,6 @@ class CustomerAuthenticator implements AuthenticatorInterface
 
         $this->adminUserService->registerAdminUser($adminUserId);
 
-        $customer = $this->session->getCustomer();
-        return $customer;
+        return $this->session->getCustomer();
     }
 }

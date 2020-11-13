@@ -6,15 +6,12 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
 use MagedIn\LoginAsCustomer\Api\Data\LoginInterface;
 
-/**
- * Class SecretManager
- */
 class SecretManager implements SecretManagerInterface
 {
     /**
@@ -23,12 +20,12 @@ class SecretManager implements SecretManagerInterface
     const HASH_LENGTH = 128;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\HashGeneratorInterface
+     * @var HashGeneratorInterface
      */
     private $hashGenerator;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\LoginRepositoryInterface
+     * @var LoginRepositoryInterface
      */
     private $loginRepository;
 
@@ -43,7 +40,7 @@ class SecretManager implements SecretManagerInterface
     private $loginResource;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\ExpirationTimeManagerInterface
+     * @var ExpirationTimeManagerInterface
      */
     private $expirationTimeManager;
 
@@ -55,7 +52,7 @@ class SecretManager implements SecretManagerInterface
     public function __construct(
         HashGeneratorInterface $hashGenerator,
         LoginRepositoryInterface $loginRepository,
-        \MagedIn\LoginAsCustomer\Model\LoginFactory $loginFactory,
+        LoginFactory $loginFactory,
         ResourceModel\Login $loginResource,
         ExpirationTimeManagerInterface $expirationTimeManager,
         Validator\ExpirationTimeValidator $expirationTimeValidator

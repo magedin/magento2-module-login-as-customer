@@ -6,16 +6,13 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
 use MagedIn\LoginAsCustomer\Api\Data\LoginInterface;
 use Magento\Framework\Model\AbstractModel;
 
-/**
- * Class Login
- */
 class Login extends AbstractModel implements LoginInterface
 {
     /**

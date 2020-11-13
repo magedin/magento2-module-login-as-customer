@@ -6,7 +6,7 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
@@ -15,14 +15,11 @@ use Magento\Framework\Exception\AlreadyExistsException;
 
 /**
  * Class LoginRepository
+ *
+ * This is the login repository class.
  */
 class LoginRepository implements LoginRepositoryInterface
 {
-    /**
-     * @var ResourceModel\LoginFactory
-     */
-    private $loginResourceFactory;
-
     /**
      * @var ResourceModel\Login
      */

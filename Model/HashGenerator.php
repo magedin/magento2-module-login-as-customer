@@ -6,22 +6,21 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
-/**
- * Class HashGenerator
- */
+use Magento\Framework\Math\Random;
+
 class HashGenerator implements HashGeneratorInterface
 {
     /**
-     * @var \Magento\Framework\Math\Random
+     * @var Random
      */
     private $generator;
 
     public function __construct(
-        \Magento\Framework\Math\Random $generator
+        Random $generator
     ) {
         $this->generator = $generator;
     }

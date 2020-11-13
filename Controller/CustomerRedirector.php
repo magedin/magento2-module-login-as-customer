@@ -5,20 +5,19 @@
  *
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Controller;
 
+use MagedIn\LoginAsCustomer\Model\Config;
 use MagedIn\LoginAsCustomer\Model\Config\Source\CustomerRedirectOptions;
+use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\App\ResponseInterface;
 
-/**
- * Class CustomerRedirector
- */
 class CustomerRedirector implements CustomerRedirectorInterface
 {
     /**
-     * @var \Magento\Framework\App\Response\RedirectInterface
+     * @var RedirectInterface
      */
     private $redirect;
 
@@ -28,14 +27,14 @@ class CustomerRedirector implements CustomerRedirectorInterface
     private $response;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Model\Config
+     * @var Config
      */
     private $config;
 
     public function __construct(
         ResponseInterface $response,
-        \MagedIn\LoginAsCustomer\Model\Config $config,
-        \Magento\Framework\App\Response\RedirectInterface $redirect
+        Config $config,
+        RedirectInterface $redirect
     ) {
         $this->redirect = $redirect;
         $this->config = $config;

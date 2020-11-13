@@ -6,20 +6,19 @@
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Controller\Customer;
 
+use MagedIn\LoginAsCustomer\Controller\CustomerRedirectorInterface;
 use MagedIn\LoginAsCustomer\Model\LoginProcessorInterface;
 use MagedIn\LoginAsCustomer\Model\UrlParametersEncryptorInterface;
 use MagedIn\LoginAsCustomer\Model\Validator\ParametersValidator;
+use MagedIn\LoginAsCustomer\Service\AdminUserService;
+use Magento\Customer\Model\Customer;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\ResponseInterface;
 
-/**
- * Class Auth
- */
 class Auth extends Action
 {
     /**
@@ -38,12 +37,12 @@ class Auth extends Action
     private $loginProcessor;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Service\AdminUserService
+     * @var AdminUserService
      */
     private $adminUserService;
 
     /**
-     * @var \MagedIn\LoginAsCustomer\Controller\CustomerRedirectorInterface
+     * @var CustomerRedirectorInterface
      */
     private $customerRedirector;
 
@@ -52,8 +51,8 @@ class Auth extends Action
         UrlParametersEncryptorInterface $urlParametersEncryptor,
         ParametersValidator $parametersValidator,
         LoginProcessorInterface $loginProcessor,
-        \MagedIn\LoginAsCustomer\Service\AdminUserService $adminUserService,
-        \MagedIn\LoginAsCustomer\Controller\CustomerRedirectorInterface $customerRedirector
+        AdminUserService $adminUserService,
+        CustomerRedirectorInterface $customerRedirector
     ) {
         parent::__construct($context);
         $this->urlParametersEncryptor = $urlParametersEncryptor;
@@ -81,7 +80,7 @@ class Auth extends Action
         $customerId  = (int) $params[ParametersValidator::PARAM_CUSTOMER_ID];
         $adminUserId = (int) $params[ParametersValidator::PARAM_ADMIN_USER_ID];
 
-        /** @var \Magento\Customer\Model\Customer $customer */
+        /** @var Customer $customer */
         $customer = $this->loginProcessor->process($customerId, $adminUserId);
 
         if (!$customer->getId()) {

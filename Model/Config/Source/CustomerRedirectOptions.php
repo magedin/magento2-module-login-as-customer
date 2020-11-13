@@ -5,7 +5,7 @@
  *
  * @author Tiago Sampaio <tiago.sampaio@magedin.com>
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model\Config\Source;
 
@@ -13,6 +13,8 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 /**
  * Class CustomerRedirectOptions
+ *
+ * This class is responsible for providing the options for configuration.
  */
 class CustomerRedirectOptions implements OptionSourceInterface
 {
