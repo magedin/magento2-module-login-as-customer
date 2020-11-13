@@ -9,8 +9,8 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="magedin" translate="label" sortOrder="900">
-            <label><![CDATA[MagedIn]]></label>
+        <tab id="magedin" translate="label" sortOrder="100">
+            <label>MagedIn Technology</label>
         </tab>
         <section id="magedin_loginascustomer" translate="label comment" type="text" sortOrder="100" showInDefault="1"
                  showInWebsite="1" showInStore="1">
