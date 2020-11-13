@@ -1,6 +1,6 @@
 # Login as Customer for Magento 2
 
-![ExtDN M2 Coding Standard](https://github.com/magedin/magento2-module-login-as-customer/workflows/ExtDN%20M2%20Coding%20Standard/badge.svg)
+![Magento 2 Coding Standard](https://github.com/magedin/magento2-module-login-as-customer/workflows/Magento%202%20Coding%20Standard/badge.svg)
 [![Latest Stable Version](https://poser.okvpn.org/magedin/login-as-customer/v/stable)](https://packagist.org/packages/magedin/login-as-customer)
 [![Total Downloads](https://poser.okvpn.org/magedin/login-as-customer/downloads)](https://packagist.org/packages/magedin/login-as-customer)
 [![License](https://poser.okvpn.org/magedin/login-as-customer/license)](https://packagist.org/packages/magedin/login-as-customer)
