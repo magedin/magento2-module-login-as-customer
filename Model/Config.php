@@ -10,12 +10,10 @@ declare(strict_types=1);
 
 namespace MagedIn\LoginAsCustomer\Model;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Store\Model\ScopeInterface;
 
-/**
- * Class Config
- */
 class Config
 {
     /**
@@ -34,7 +32,7 @@ class Config
     const XML_PATH_SECRET_KEY_EXPIRATION_TIME = 'magedin_loginascustomer/security/secret_key_expiration_time';
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     private $scopeConfig;
 
@@ -44,8 +42,8 @@ class Config
     private $dateTime;
 
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Framework\Stdlib\DateTime\DateTime $dateTime
+        ScopeConfigInterface $scopeConfig,
+        DateTime $dateTime
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->dateTime = $dateTime;

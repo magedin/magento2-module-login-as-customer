@@ -50,7 +50,9 @@ class UrlParametersEncryptor implements UrlParametersEncryptorInterface
      */
     public function decrypt(string $hash) : ?array
     {
+        // phpcs:ignore Magento2.Functions.DiscouragedFunction
         $hash = base64_decode($hash);
+        // phpcs:ignore Magento2.Security.LanguageConstruct.ExitUsage
         $json = $this->encryptor->decrypt($hash);
         $params = $this->serializer->unserialize($json);
         return (array) $params;
