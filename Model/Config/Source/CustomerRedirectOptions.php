@@ -13,8 +13,6 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 /**
  * Class CustomerRedirectOptions
- *
- * @package MagedIn\LoginAsCustomer\Model\Config\Source
  */
 class CustomerRedirectOptions implements OptionSourceInterface
 {

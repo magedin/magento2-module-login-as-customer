@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class Authenticator
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 interface AuthenticatorInterface
 {

@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model\Validator;
 
 /**
  * Class ExpirationTimeValidator
- *
- * @package MagedIn\LoginAsCustomer\Model\Validator
  */
 class ExpirationTimeValidator
 {

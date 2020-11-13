@@ -14,8 +14,6 @@ use Magento\Store\Api\Data\StoreInterface;
 
 /**
  * Class FrontendUrl
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class FrontendUrlBuilder
 {

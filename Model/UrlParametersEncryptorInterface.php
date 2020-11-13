@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class UrlParametersEncryptorInterface
- *
- * @package MagedIn\LoginAsCustomer\Api
  */
 interface UrlParametersEncryptorInterface
 {

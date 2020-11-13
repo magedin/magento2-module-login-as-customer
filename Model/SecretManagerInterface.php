@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class SecretManagerInterface
- *
- * @package MagedIn\LoginAsCustomer\Api
  */
 interface SecretManagerInterface
 {

@@ -14,8 +14,6 @@ use Magento\Customer\Model\Customer;
 
 /**
  * Class LoginProcessorInterface
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 interface LoginProcessorInterface
 {

@@ -16,8 +16,6 @@ use Magento\Framework\Event\ObserverInterface;
 
 /**
  * Class CustomerLogoutObserver
- *
- * @package MagedIn\LoginAsCustomer\Observer
  */
 class CustomerLogoutObserver implements ObserverInterface
 {

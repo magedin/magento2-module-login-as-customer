@@ -13,8 +13,6 @@ use Magento\Framework\App\ResponseInterface;
 
 /**
  * Class CustomerRedirectorInterface
- *
- * @package MagedIn\LoginAsCustomer\Controller
  */
 interface CustomerRedirectorInterface
 {

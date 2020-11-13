@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class CustomerLoginBackendUrlBuilder
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class CustomerLoginBackendUrlBuilder
 {

@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class Permission
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class Permission
 {

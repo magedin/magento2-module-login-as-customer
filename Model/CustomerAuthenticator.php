@@ -14,8 +14,6 @@ use Magento\Customer\Model\Customer;
 
 /**
  * Class CustomerAuthenticator
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class CustomerAuthenticator implements AuthenticatorInterface
 {

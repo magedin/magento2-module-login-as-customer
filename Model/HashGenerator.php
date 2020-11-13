@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class HashGenerator
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class HashGenerator implements HashGeneratorInterface
 {

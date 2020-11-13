@@ -13,8 +13,6 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Class LoginButton
- *
- * @package MagedIn\LoginAsCustomer\Block\Adminhtml\Customer\Edit
  */
 class LoginButton extends GenericButton implements ButtonProviderInterface
 {

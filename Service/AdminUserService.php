@@ -15,8 +15,6 @@ use Magento\User\Api\Data\UserInterface;
 
 /**
  * Class AdminUserService
- *
- * @package MagedIn\LoginAsCustomer\Service
  */
 class AdminUserService
 {

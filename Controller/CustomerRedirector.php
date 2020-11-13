@@ -14,8 +14,6 @@ use Magento\Framework\App\ResponseInterface;
 
 /**
  * Class CustomerRedirector
- *
- * @package MagedIn\LoginAsCustomer\Controller
  */
 class CustomerRedirector implements CustomerRedirectorInterface
 {

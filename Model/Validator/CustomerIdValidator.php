@@ -11,8 +11,6 @@ namespace MagedIn\LoginAsCustomer\Model\Validator;
 
 /**
  * Class CustomerIdValidator
- *
- * @package MagedIn\LoginAsCustomer\Model\Validator
  */
 class CustomerIdValidator
 {

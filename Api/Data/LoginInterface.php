@@ -11,9 +11,7 @@ declare(strict_types = 1);
 namespace MagedIn\LoginAsCustomer\Api\Data;
 
 /**
- * Class LoginInterface
- *
- * @package MagedIn\LoginAsCustomer\Api\Data
+ * Interface LoginInterface
  */
 interface LoginInterface
 {

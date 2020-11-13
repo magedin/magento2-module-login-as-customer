@@ -15,8 +15,6 @@ use Magento\Framework\Model\AbstractModel;
 
 /**
  * Class Login
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class Login extends AbstractModel implements LoginInterface
 {

@@ -15,8 +15,6 @@ use MagedIn\LoginAsCustomer\Api\Data;
 
 /**
  * Class Login
- *
- * @package MagedIn\LoginAsCustomer\Model\ResourceModel
  */
 class Login extends AbstractDb
 {

@@ -19,8 +19,6 @@ use Magento\Framework\App\ResponseInterface;
 
 /**
  * Class Auth
- *
- * @package MagedIn\LoginAsCustomer\Controller\Customer
  */
 class Auth extends Action
 {

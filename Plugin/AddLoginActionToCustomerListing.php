@@ -14,8 +14,6 @@ use Magento\Customer\Ui\Component\Listing\Column\Actions;
 
 /**
  * Class AddLoginActionToCustomerListing
- *
- * @package MagedIn\LoginAsCustomer\Plugin
  */
 class AddLoginActionToCustomerListing
 {

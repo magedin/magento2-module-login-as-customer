@@ -15,8 +15,6 @@ use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class Config
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class Config
 {

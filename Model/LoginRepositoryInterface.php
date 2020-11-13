@@ -14,8 +14,6 @@ use MagedIn\LoginAsCustomer\Api\Data;
 
 /**
  * Class LoginRepositoryInterface
- *
- * @package MagedIn\LoginAsCustomer\Api
  */
 interface LoginRepositoryInterface
 {

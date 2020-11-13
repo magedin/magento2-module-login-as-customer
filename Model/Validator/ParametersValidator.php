@@ -16,8 +16,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class ParametersValidator
- *
- * @package MagedIn\LoginAsCustomer\Model\Validator
  */
 class ParametersValidator
 {

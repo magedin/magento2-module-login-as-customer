@@ -15,8 +15,6 @@ use Magento\Framework\Exception\AlreadyExistsException;
 
 /**
  * Class LoginRepository
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class LoginRepository implements LoginRepositoryInterface
 {

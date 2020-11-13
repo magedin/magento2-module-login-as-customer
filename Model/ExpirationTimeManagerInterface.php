@@ -12,8 +12,6 @@ namespace MagedIn\LoginAsCustomer\Model;
 
 /**
  * Class ExpirationTimeManagerInterface
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 interface ExpirationTimeManagerInterface
 {

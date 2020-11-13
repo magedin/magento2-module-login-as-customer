@@ -18,8 +18,6 @@ use MagedIn\LoginAsCustomer\Api\Data;
 
 /**
  * Class Login
- *
- * @package MagedIn\LoginAsCustomer\Controller\Adminhtml\Customer
  */
 class Login extends Action
 {

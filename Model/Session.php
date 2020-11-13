@@ -20,8 +20,6 @@ use Magento\Framework\Session\ValidatorInterface;
 
 /**
  * Class Session
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class Session extends SessionManager
 {

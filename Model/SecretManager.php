@@ -14,8 +14,6 @@ use MagedIn\LoginAsCustomer\Api\Data\LoginInterface;
 
 /**
  * Class SecretManager
- *
- * @package MagedIn\LoginAsCustomer\Model
  */
 class SecretManager implements SecretManagerInterface
 {
