@@ -80,7 +80,7 @@ class Login extends AbstractDb
      */
     private function deleteByExpression(Expression $expression) : int
     {
-        $result = $this->getConnection()->delete(self::TABLE, $expression->getExpression());
+        $result = $this->getConnection()->delete(self::TABLE, (string) $expression);
         return (int) $result;
     }
 }
